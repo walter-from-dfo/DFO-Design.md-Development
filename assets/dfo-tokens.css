@@ -1,0 +1,194 @@
+/* ============================================================
+   Dr. Frederick's Original — Colors & Type tokens
+   Extracted from drfredericksoriginal.com brand assets.
+   ============================================================ */
+
+@font-face {
+  font-family: "Neuzeit Grotesk";
+  src: url("fonts/NeuzeitGrotesk-ExtraCondBlack.ttf") format("truetype");
+  font-weight: 900;
+  font-stretch: 75%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("fonts/Poppins-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Poppins Regular / Medium fall back to Google Fonts — see README note. */
+
+:root {
+  /* ---- Core palette ------------------------------------------------ */
+  --dfo-navy:        #0C1B44; /* primary brand — logo "DR FREDERICK'S" */
+  --dfo-navy-800:    #17266A;
+  --dfo-navy-600:    #273B8E;
+
+  --dfo-orange:      #F3821E; /* energetic accent — stars, CTAs, badges */
+  --dfo-orange-600:  #D86B08;
+  --dfo-orange-200:  #FBD6A8;
+
+  --dfo-sky:         #53A2ED; /* secondary blue — checkmark badges */
+  --dfo-sky-200:     #A1CDF6; /* soft blue — badge circles, illustrations */
+  --dfo-sky-50:      #E6F1FB;
+
+  /* ---- Neutrals (warm paper) -------------------------------------- */
+  --dfo-bg:          #FFFFFF;
+  --dfo-paper:       #F7F4EE; /* warm off-white seen in product tiles */
+  --dfo-sand:        #EAE3D5; /* lifestyle card backgrounds */
+  --dfo-stone-200:   #D8D2C5;
+  --dfo-stone-400:   #A69E8C;
+  --dfo-ink-700:     #3E3B34;
+  --dfo-ink-900:     #1B1A17;
+
+  /* ---- Semantic ---------------------------------------------------- */
+  --fg-1: var(--dfo-navy);       /* primary text, headlines */
+  --fg-2: var(--dfo-ink-700);    /* body copy */
+  --fg-3: var(--dfo-stone-400);  /* muted, meta */
+  --fg-on-dark: #FFFFFF;
+
+  --bg-1: var(--dfo-bg);
+  --bg-2: var(--dfo-paper);
+  --bg-3: var(--dfo-sand);
+  --bg-dark: var(--dfo-navy);
+
+  --accent:        var(--dfo-orange);
+  --accent-soft:   var(--dfo-sky-200);
+  --accent-deep:   var(--dfo-navy);
+
+  --border:        rgba(12, 27, 68, 0.10);
+  --border-strong: rgba(12, 27, 68, 0.22);
+
+  --success: #3BA368;
+  --warning: #F3821E;
+  --danger:  #D0452C;
+
+  /* ---- Type families ---------------------------------------------- */
+  --font-display: "Neuzeit Grotesk", "Oswald", "Anton", "Arial Narrow", sans-serif;
+  --font-body:    "Poppins", "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+  /* Display uses Neuzeit ExtraCond Black — tight tracking, all-caps headlines */
+  --display-letter-spacing: -0.01em;
+  --display-line-height: 0.92;
+
+  /* ---- Type scale (semantic) -------------------------------------- */
+  --fs-hero:   clamp(56px, 9vw, 140px); /* "Live Fully" style */
+  --fs-h1:     clamp(40px, 5vw, 72px);
+  --fs-h2:     clamp(32px, 3.4vw, 52px);
+  --fs-h3:     28px;
+  --fs-h4:     22px;
+  --fs-lead:   20px;
+  --fs-body:   17px;
+  --fs-small:  14px;
+  --fs-micro:  12px;
+
+  /* ---- Spacing / radii / shadow ----------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  --shadow-1: 0 1px 2px rgba(12,27,68,.06), 0 2px 6px rgba(12,27,68,.06);
+  --shadow-2: 0 6px 18px rgba(12,27,68,.10);
+  --shadow-3: 0 18px 40px rgba(12,27,68,.16);
+
+  --ease-out: cubic-bezier(.22,.61,.36,1);
+  --dur-fast: 140ms;
+  --dur-med:  220ms;
+}
+
+/* ============================================================
+   Semantic element styles
+   ============================================================ */
+html, body {
+  background: var(--bg-1);
+  color: var(--fg-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, .h1, h2, .h2, h3, .h3, .display {
+  font-family: var(--font-display);
+  color: var(--fg-1);
+  text-transform: uppercase;
+  letter-spacing: var(--display-letter-spacing);
+  line-height: var(--display-line-height);
+  font-weight: 900;
+  margin: 0 0 .4em;
+  text-wrap: balance;
+}
+h1, .h1    { font-size: var(--fs-h1); }
+h2, .h2    { font-size: var(--fs-h2); }
+h3, .h3    { font-size: var(--fs-h3); }
+.display   { font-size: var(--fs-hero); }
+
+.eyebrow {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-weight: 600;
+  font-size: var(--fs-micro);
+  color: var(--dfo-orange);
+}
+
+h4, .h4 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-h4);
+  color: var(--fg-1);
+  margin: 0 0 .4em;
+}
+
+p    { margin: 0 0 1em; text-wrap: pretty; }
+.lead { font-size: var(--fs-lead); line-height: 1.5; color: var(--fg-2); }
+small, .small { font-size: var(--fs-small); }
+
+a { color: var(--dfo-navy); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--dfo-orange); }
+
+.tm { font-size: .5em; vertical-align: super; font-weight: 600; }
+
+/* Buttons --------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 26px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out),
+              background var(--dur-med) var(--ease-out),
+              color var(--dur-med) var(--ease-out),
+              border-color var(--dur-med) var(--ease-out);
+}
+.btn:active { transform: translateY(1px) scale(.99); }
+.btn-primary { background: var(--dfo-navy); color: #fff; }
+.btn-primary:hover { background: var(--dfo-orange); color: #fff; }
+.btn-accent  { background: var(--dfo-orange); color: #fff; }
+.btn-accent:hover  { background: var(--dfo-orange-600); }
+.btn-outline { background: transparent; color: var(--dfo-navy); border-color: var(--dfo-navy); }
+.btn-outline:hover { background: var(--dfo-navy); color: #fff; }
+.btn-ghost-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
+.btn-ghost-light:hover { background: #fff; color: var(--dfo-navy); }

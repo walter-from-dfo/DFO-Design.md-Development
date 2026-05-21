@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DFO Design System — Primitives Documentation</title>
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:       #1d396a;
+  --navy-dark:  #10426c;
+  --navy-deep:  #152740;
+  --teal:       #186972;
+  --teal-light: #10ada8;
+  --orange:     #e28433;
+  --amber:      #f6ab25;
+  --cream:      #fef5e3;
+  --sky:        #a8cae4;
+  --near-black: #231f20;
+  --gray:       #888780;
+  --gray-light: #d3d1c7;
+  --gray-pale:  #f1efe8;
+  --white:      #ffffff;
+  --red-soft:   #cc4727;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--near-black);
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--navy);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+nav a {
+  color: var(--sky);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 14px 16px;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+nav a:hover { color: var(--cream); border-bottom-color: var(--sky); }
+nav .nav-brand {
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 16px;
+  padding-right: 16px;
+  border-right: 1px solid rgba(168,202,228,0.3);
+  white-space: nowrap;
+}
+
+/* ── PAGE WRAPPER ── */
+.page { max-width: 960px; margin: 0 auto; padding: 0 32px 80px; }
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 56px 0 40px;
+  border-bottom: 1px solid var(--gray-light);
+  margin-bottom: 56px;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+.hero h1 {
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+.hero h1 span { color: var(--teal); }
+.hero p {
+  font-size: 16px;
+  color: var(--gray);
+  max-width: 600px;
+  margin: 0 auto 24px;
+  line-height: 1.65;
+}
+.hero-meta {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.meta-chip {
+  font-size: 12px;
+  color: var(--navy);
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-weight: 600;
+}
+
+/* ── SECTION HEADERS ── */
+.section {
+  margin-bottom: 64px;
+  scroll-margin-top: 56px;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.section-number {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+.section-lead {
+  font-size: 15px;
+  color: var(--gray);
+  margin-bottom: 32px;
+  max-width: 700px;
+  line-height: 1.65;
+}
+.divider {
+  height: 1px;
+  background: var(--gray-light);
+  margin: 64px 0;
+}
+
+/* ── INFOGRAPHIC EMBED ── */
+.infographic-wrap {
+  background: var(--cream);
+  border: 1px solid var(--gray-light);
+  border-radius: 16px;
+  padding: 32px 24px;
+  margin-bottom: 40px;
+}
+
+/* ── LAYER CARDS ── */
+.layer-card {
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border: 1px solid transparent;
+}
+.layer-card-header {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.layer-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.layer-card-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+.layer-card-sub {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 1px;
+}
+.layer-card-body {
+  padding: 0 24px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 600px) {
+  .layer-card-body { grid-template-columns: 1fr; }
+}
+.layer-col-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+.file-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.file-list li {
+  font-size: 13px;
+  line-height: 1.5;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.file-list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+.file-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  background: rgba(255,255,255,0.5);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-right: 2px;
+}
+
+/* L4 */
+.l4 { background: #dceef8; border-color: var(--sky); }
+.l4 .layer-card-header { background: var(--sky); color: var(--navy-deep); }
+.l4 .layer-badge { background: var(--navy); color: var(--cream); }
+.l4 .file-list li::before { background: var(--navy); }
+
+/* L3 */
+.l3 { background: #e0f2f0; border-color: var(--teal); }
+.l3 .layer-card-header { background: var(--teal); color: var(--cream); }
+.l3 .layer-badge { background: rgba(255,255,255,0.2); color: var(--cream); border: 1px solid rgba(255,255,255,0.4); }
+.l3 .file-list li::before { background: var(--teal); }
+
+/* L2 */
+.l2 { background: #dde5f0; border-color: var(--navy); }
+.l2 .layer-card-header { background: var(--navy); color: var(--cream); }
+.l2 .layer-badge { background: rgba(255,255,255,0.15); color: var(--cream); border: 1px solid rgba(255,255,255,0.35); }
+.l2 .file-list li::before { background: var(--navy); }
+
+/* L1 */
+.l1 { background: #e8ecf4; border-color: #2c4d70; }
+.l1 .layer-card-header { background: #2c4d70; color: var(--cream); }
+.l1 .layer-badge { background: rgba(255,255,255,0.15); color: var(--cream); border: 1px solid rgba(255,255,255,0.35); }
+.l1 .file-list li::before { background: #2c4d70; }
+
+/* L0 */
+.l0 { background: #fdf0e0; border-color: var(--orange); }
+.l0 .layer-card-header { background: var(--orange); color: #3a1e00; }
+.l0 .layer-badge { background: rgba(255,255,255,0.3); color: #3a1e00; }
+.l0 .file-list li::before { background: var(--orange); }
+
+/* ── GAP CALLOUT ── */
+.gap-box {
+  background: #fff8ee;
+  border: 1.5px solid var(--orange);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.gap-icon {
+  width: 28px; height: 28px;
+  background: var(--orange);
+  color: white;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.gap-content { font-size: 13px; color: #3a2a00; line-height: 1.55; }
+.gap-content strong { font-weight: 600; color: var(--navy); display: block; margin-bottom: 3px; }
+
+/* ── THREE PYRAMIDS ── */
+.pyramids-wrap {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 14px;
+  padding: 28px 24px 32px;
+  margin-bottom: 40px;
+}
+.pyramids-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+.pyramids-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 640px) {
+  .pyramids-grid { grid-template-columns: 1fr; }
+}
+.pyramid-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pyramid-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-top: 10px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+.pyramid-sub {
+  font-size: 11px;
+  color: var(--gray);
+  text-align: center;
+  margin-top: 3px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.p-layer-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  font-size: 11.5px;
+  color: #3a3a38;
+  line-height: 1.65;
+}
+.p-layer-list li {
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+.p-layer-list li strong { font-weight: 600; margin-right: 4px; }
+.l0-navy  { background: #e8ecf4; }
+.l1-navy  { background: #dde5f0; }
+.l2-navy  { background: #d2dcea; }
+.l0-teal  { background: #e0f2f0; }
+.l1-teal  { background: #d4eeeb; }
+.l2-teal  { background: #c6e8e4; }
+.l0-org   { background: #fdf0e0; }
+.l1-org   { background: #fae6cc; }
+.l2-org   { background: #f6dab8; }
+
+/* ── PIPELINE / STACK SECTION ── */
+.stack-wrap { display: flex; flex-direction: column; gap: 0; margin-bottom: 32px; }
+.stack-layer {
+  position: relative;
+  border-radius: 10px 10px 4px 4px;
+  padding: 14px 20px 14px 24px;
+  margin-bottom: 3px;
+  cursor: default;
+}
+.stack-layer::after {
+  content: '';
+  position: absolute;
+  bottom: -7px; left: 6px; right: 6px;
+  height: 8px;
+  border-radius: 0 0 6px 6px;
+  background: inherit;
+  filter: brightness(0.75);
+  z-index: -1;
+}
+.stack-layer-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-bottom: 2px;
+}
+.stack-layer-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.stack-layer-files {
+  font-size: 12px;
+  opacity: 0.85;
+  line-height: 1.55;
+}
+.stack-layer-files span {
+  display: inline-block;
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+  padding: 1px 7px;
+  margin: 2px 2px 0 0;
+  font-size: 11px;
+  font-weight: 600;
+}
+.sl4 { background: var(--sky); color: var(--navy-deep); }
+.sl3 { background: var(--teal); color: #e8f6f5; }
+.sl2 { background: var(--navy); color: var(--cream); }
+.sl1 { background: #2c4d70; color: var(--cream); }
+.sl0 { background: var(--orange); color: #3a1e00; }
+.arrow-between {
+  display: flex; align-items: center; gap: 8px;
+  padding: 3px 0 3px 32px;
+}
+.arrow-between-label { font-size: 11px; color: var(--gray); font-style: italic; }
+
+/* ── JUDGES ── */
+.judges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+@media (max-width: 640px) { .judges-grid { grid-template-columns: 1fr; } }
+.judge-card {
+  background: var(--white);
+  border: 1.5px solid var(--orange);
+  border-radius: 12px;
+  padding: 20px;
+}
+.judge-card-icon {
+  width: 36px; height: 36px;
+  background: var(--orange);
+  color: white;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.judge-card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.judge-card p { font-size: 12.5px; color: #3a2a00; line-height: 1.55; }
+
+/* ── CALLOUT BOX ── */
+.callout {
+  background: var(--white);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+  margin: 24px 0;
+  font-size: 14px;
+  color: var(--navy);
+  line-height: 1.6;
+}
+.callout strong { font-weight: 600; }
+
+/* ── TABLE ── */
+.rules-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 20px 0;
+}
+.rules-table th {
+  background: var(--navy);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+}
+.rules-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--gray-light);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.rules-table tr:nth-child(even) td { background: var(--gray-pale); }
+.rules-table code {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  background: #e8ecf4;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--navy);
+}
+
+/* ── PHASE STEPS ── */
+.phase-list { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+.phase-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+.phase-num {
+  width: 28px; height: 28px;
+  background: var(--navy);
+  color: var(--cream);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.phase-item h4 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.phase-item p { font-size: 13px; color: var(--gray); line-height: 1.55; }
+
+/* ── COLOR SWATCHES ── */
+.swatch-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+  padding: 6px 12px 6px 8px;
+}
+.swatch-dot {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.08);
+  flex-shrink: 0;
+}
+.swatch-info { font-size: 11px; line-height: 1.3; }
+.swatch-name { font-weight: 600; color: var(--navy); }
+.swatch-hex { color: var(--gray); font-family: monospace; }
+
+/* ── TEMPLATE GRID ── */
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.template-card {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.template-card-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.4px;
+  margin-bottom: 4px;
+}
+.template-card h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.template-card p { font-size: 12px; color: var(--gray); line-height: 1.45; }
+.template-slot {
+  font-size: 11px;
+  color: var(--teal);
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--gray-light);
+  padding: 32px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--gray);
+}
+footer strong { color: var(--navy); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">DFO Design System</span>
+  <a href="#overview">Overview</a>
+  <a href="#infographic">Infographic</a>
+  <a href="#layers">Layers</a>
+  <a href="#pyramids">Three Pyramids</a>
+  <a href="#templates">11 Templates</a>
+  <a href="#colors">Color System</a>
+  <a href="#judges">Judges</a>
+  <a href="#pipeline">Pipeline</a>
+  <a href="#gaps">Gap Analysis</a>
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Dr. Frederick's Original</div>
+  <h1>Design System <span>Primitives</span> Documentation</h1>
+  <p>A layered, locked system that every agent and every human reads from before producing any carousel image. Mapped to the BP Trading Co. Primitives Framework.</p>
+  <div class="hero-meta">
+    <span class="meta-chip">v2.0 · 2026-05-20</span>
+    <span class="meta-chip">11 carousel templates</span>
+    <span class="meta-chip">5 pipeline layers</span>
+    <span class="meta-chip">3 judge categories</span>
+    <span class="meta-chip">Amazon · TikTok Shop</span>
+  </div>
+</div>
+
+<!-- ── SECTION 1: OVERVIEW ── -->
+<div class="section" id="overview">
+  <div class="section-header">
+    <span class="section-number">01</span>
+  </div>
+  <h2>Why this system exists</h2>
+  <p class="section-lead">Without structure, every carousel image is bespoke — quality drifts, decisions get re-litigated, and we can't audit why an output said what it said. The Primitives Framework is the fix.</p>
+
+  <div class="callout">
+    <strong>The core principle:</strong> The quality of any AI-generated asset is bounded by the quality of its source material. Lock the source material, and generation becomes the cheap step. Change a primitive, and every downstream asset regenerates correctly automatically.
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:24px;">
+    <div style="background:var(--white);border:1px solid var(--gray-light);border-radius:10px;padding:18px;">
+      <div style="font-size:22px;margin-bottom:8px;">🔁</div>
+      <h4 style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;">Reproducibility</h4>
+      <p style="font-size:13px;color:var(--gray);line-height:1.5;">Same bundle + same skill = same shape of output every time.</p>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--gray-light);border-radius:10px;padding:18px;">
+      <div style="font-size:22px;margin-bottom:8px;">🔍</div>
+      <h4 style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;">Auditability</h4>
+      <p style="font-size:13px;color:var(--gray);line-height:1.5;">Every L4 asset traces back to its primitive sources. Wrong claim? Trace it to L1.</p>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--gray-light);border-radius:10px;padding:18px;">
+      <div style="font-size:22px;margin-bottom:8px;">⚡</div>
+      <h4 style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;">Speed</h4>
+      <p style="font-size:13px;color:var(--gray);line-height:1.5;">Locked primitives turn generation into the cheap, fast step in the workflow.</p>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--gray-light);border-radius:10px;padding:18px;">
+      <div style="font-size:22px;margin-bottom:8px;">📈</div>
+      <h4 style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;">Scale</h4>
+      <p style="font-size:13px;color:var(--gray);line-height:1.5;">A new vertical is a new named positioning, not a new everything.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SECTION 2: INFOGRAPHIC ── -->
+<div class="section" id="infographic">
+  <div class="section-header">
+    <span class="section-number">02</span>
+  </div>
+  <h2>Framework at a glance</h2>
+  <p class="section-lead">The full pipeline — from raw evidence through to finished carousel images — with the Judges loop and the Inside a Template detail.</p>
+
+  <div class="infographic-wrap">
+    <!-- INFOGRAPHIC: main stack + right column -->
+    <div style="text-align:center;font-size:18px;font-weight:600;color:var(--navy);margin-bottom:4px;">DFO Design System — Primitives Framework</div>
+    <div style="text-align:center;font-size:12px;color:var(--gray);margin-bottom:28px;">How the design system maps to BP Trading Co.'s layered AI pipeline</div>
+
+    <div style="display:grid;grid-template-columns:1fr 210px;gap:24px;align-items:start;max-width:860px;margin:0 auto;">
+
+      <!-- STACK -->
+      <div>
+        <!-- L4 -->
+        <div style="position:relative;background:var(--sky);color:var(--navy-deep);border-radius:10px 10px 4px 4px;padding:14px 20px 14px 24px;margin-bottom:3px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;opacity:0.7;margin-bottom:2px;">L4 · Generated Assets</div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Finished carousel images</div>
+          <div style="font-size:11px;opacity:0.8;">
+            <span style="background:rgba(255,255,255,0.35);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">01_Feature_Dominant.jpg</span>
+            <span style="background:rgba(255,255,255,0.35);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">02_Comparison_Chart.jpg</span>
+            <span style="background:rgba(255,255,255,0.35);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">… through 11_Cross_Sell.jpg</span>
+          </div>
+          <div style="position:absolute;bottom:-7px;left:6px;right:6px;height:8px;border-radius:0 0 6px 6px;background:var(--sky);filter:brightness(0.75);z-index:-1;"></div>
+        </div>
+        <!-- arrow -->
+        <div style="display:flex;align-items:center;gap:8px;padding:4px 0 4px 32px;">
+          <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:11px;color:var(--gray);font-style:italic;">revise if judges reject · regenerate as primitives evolve</span>
+        </div>
+        <!-- L3 -->
+        <div style="position:relative;background:var(--teal);color:#e8f6f5;border-radius:10px 10px 4px 4px;padding:14px 20px 14px 24px;margin-bottom:3px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;opacity:0.7;margin-bottom:2px;">L3 · Production</div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Four modalities that render assets</div>
+          <div style="font-size:11px;opacity:0.85;">
+            <span style="background:rgba(255,255,255,0.2);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">DFO_Prompt_Templates.md</span>
+            <span style="background:rgba(255,255,255,0.2);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">Claude (judgment)</span>
+            <span style="background:rgba(255,255,255,0.2);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">GPT Image 2 / Nano Banana</span>
+            <span style="background:rgba(255,255,255,0.2);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">Human designer</span>
+          </div>
+          <div style="position:absolute;bottom:-7px;left:6px;right:6px;height:8px;border-radius:0 0 6px 6px;background:var(--teal);filter:brightness(0.75);z-index:-1;"></div>
+        </div>
+        <!-- arrow -->
+        <div style="display:flex;align-items:center;gap:8px;padding:4px 0 4px 32px;">
+          <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:11px;color:var(--gray);font-style:italic;">positionings (base + named template variant) consumed by L3</span>
+        </div>
+        <!-- L2 -->
+        <div style="position:relative;background:var(--navy);color:var(--cream);border-radius:10px 10px 4px 4px;padding:14px 20px 14px 24px;margin-bottom:3px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;opacity:0.7;margin-bottom:2px;">L2 · Locked Judgment</div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px;">11 template .md files — one decision per slot</div>
+          <div style="font-size:11px;opacity:0.85;">
+            <span style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">01_feature-dominant.md</span>
+            <span style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">02_comparison-chart.md</span>
+            <span style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">… through 11_cross-sell.md</span>
+            <div style="margin-top:6px;font-size:11px;opacity:0.75;">Each file locks: which layout variant to use, what each element must do, what "correct" looks like for review.</div>
+          </div>
+          <div style="position:absolute;bottom:-7px;left:6px;right:6px;height:8px;border-radius:0 0 6px 6px;background:var(--navy);filter:brightness(0.75);z-index:-1;"></div>
+        </div>
+        <!-- arrow -->
+        <div style="display:flex;align-items:center;gap:8px;padding:4px 0 4px 32px;">
+          <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:11px;color:var(--gray);font-style:italic;">brand truth + immutable rules consumed by L2</span>
+        </div>
+        <!-- L1 -->
+        <div style="position:relative;background:#2c4d70;color:var(--cream);border-radius:10px 10px 4px 4px;padding:14px 20px 14px 24px;margin-bottom:3px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;opacity:0.7;margin-bottom:2px;">L1 · Primitives</div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Immutable brand truth — facts, not interpretations</div>
+          <div style="font-size:11px;opacity:0.85;">
+            <span style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">global-rules.md</span>
+            <span style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">color-system.md</span>
+            <span style="background:rgba(255,255,255,0.15);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">reusable-elements.md</span>
+            <div style="margin-top:6px;font-size:11px;opacity:0.75;">Typography stack · two-tone header rule · sparkle system · wave shapes · all accent hex values per SKU family.</div>
+          </div>
+          <div style="position:absolute;bottom:-7px;left:6px;right:6px;height:8px;border-radius:0 0 6px 6px;background:#2c4d70;filter:brightness(0.75);z-index:-1;"></div>
+        </div>
+        <!-- arrow -->
+        <div style="display:flex;align-items:center;gap:8px;padding:4px 0 4px 32px;">
+          <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:11px;color:var(--gray);font-style:italic;">raw source materials curated into L1</span>
+        </div>
+        <!-- L0 -->
+        <div style="position:relative;background:var(--orange);color:#3a1e00;border-radius:10px 10px 4px 4px;padding:14px 20px 14px 24px;margin-bottom:3px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;opacity:0.7;margin-bottom:2px;">L0 · Evidence</div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Raw source materials from the product team</div>
+          <div style="font-size:11px;opacity:0.85;">
+            <span style="background:rgba(255,255,255,0.3);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">Color_Palette.svg</span>
+            <span style="background:rgba(255,255,255,0.3);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">Logo.svg</span>
+            <span style="background:rgba(255,255,255,0.3);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">Shapes.svg</span>
+            <span style="background:rgba(255,255,255,0.3);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">Sparkles_1–11.png</span>
+            <span style="background:rgba(255,255,255,0.3);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">Product photos</span>
+            <span style="background:rgba(255,255,255,0.3);border-radius:4px;padding:1px 7px;margin:2px 2px 0 0;display:inline-block;font-weight:600;">Brand fonts (.ttf)</span>
+            <div style="margin-top:6px;font-size:11px;opacity:0.75;">Reference carousel images · before/after photography · doctor portrait</div>
+          </div>
+          <div style="position:absolute;bottom:-7px;left:6px;right:6px;height:8px;border-radius:0 0 6px 6px;background:var(--orange);filter:brightness(0.75);z-index:-1;"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <!-- Judges -->
+        <div style="background:#fff8ee;border:1.5px solid var(--orange);border-radius:12px;padding:16px;">
+          <div style="font-size:12px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.5px;text-align:center;margin-bottom:10px;">⚖ Judges</div>
+          <div style="display:flex;gap:8px;margin-bottom:7px;align-items:flex-start;">
+            <div style="width:26px;height:26px;background:var(--orange);color:white;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✓</div>
+            <div style="font-size:11.5px;color:#3a2a00;line-height:1.4;"><strong style="display:block;font-weight:600;color:var(--navy);">Truth</strong>Before/after real · day counts accurate · press logos earned</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:7px;align-items:flex-start;">
+            <div style="width:26px;height:26px;background:var(--orange);color:white;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">≡</div>
+            <div style="font-size:11.5px;color:#3a2a00;line-height:1.4;"><strong style="display:block;font-weight:600;color:var(--navy);">Alignment</strong>Two-tone header · wave shape · sparkle · product visible</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:10px;align-items:flex-start;">
+            <div style="width:26px;height:26px;background:var(--orange);color:white;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">★</div>
+            <div style="font-size:11.5px;color:#3a2a00;line-height:1.4;"><strong style="display:block;font-weight:600;color:var(--navy);">Brand</strong>Correct accent palette · DFO dominant · no fabricated claims</div>
+          </div>
+          <div style="background:var(--teal);color:#e8f6f5;border-radius:20px;font-size:11px;font-weight:600;padding:3px 12px;text-align:center;">pass → save to carousel</div>
+        </div>
+        <!-- Inside a Template -->
+        <div style="background:var(--white);border:1.5px solid var(--sky);border-radius:12px;padding:16px;">
+          <div style="font-size:12px;font-weight:600;color:var(--navy);text-align:center;margin-bottom:10px;">Inside a Template (L2)</div>
+          <div style="background:var(--navy);color:var(--cream);border-radius:8px;padding:8px 12px;font-size:11.5px;text-align:center;margin-bottom:8px;">
+            Base rules
+            <div style="font-size:10px;opacity:0.7;margin-top:2px;">Two-tone · wave · sparkle · product visible</div>
+          </div>
+          <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;">
+            <span style="background:#e8f0f8;color:var(--navy);border-radius:20px;font-size:10px;font-weight:600;padding:2px 8px;border:1px solid var(--sky);">Before / After</span>
+            <span style="background:#e8f0f8;color:var(--navy);border-radius:20px;font-size:10px;font-weight:600;padding:2px 8px;border:1px solid var(--sky);">Product Benefit</span>
+            <span style="background:#e8f0f8;color:var(--navy);border-radius:20px;font-size:10px;font-weight:600;padding:2px 8px;border:1px solid var(--sky);">Multi-Problem Grid</span>
+          </div>
+          <div style="font-size:11px;color:var(--gray);text-align:center;margin-top:8px;line-height:1.4;">Named variants inherit base rules. Template 09 has 3 variants — all locked to the same header rule and sparkle system.</div>
+        </div>
+        <!-- How an agent uses this -->
+        <div style="background:#e8f0f8;border-radius:10px;padding:14px;font-size:11.5px;color:var(--navy);line-height:1.55;">
+          <strong style="font-weight:600;display:block;margin-bottom:4px;">How an agent uses this</strong>
+          Request: "build slot 9 for SKU X." Claude assembles a <em>primitive bundle</em>: L1 brand truth + L2 template rules + product brief → L3 renders → Judges observe. Wrong claim → trace to L1. Wrong layout → trace to L2.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SECTION 3: LAYER-BY-LAYER ── -->
+<div class="section" id="layers">
+  <div class="section-header">
+    <span class="section-number">03</span>
+  </div>
+  <h2>Layer-by-layer breakdown</h2>
+  <p class="section-lead">Full file lists, rules, and what each layer is responsible for — plus gap analysis where the system needs to grow.</p>
+
+  <!-- L0 -->
+  <div class="layer-card l0">
+    <div class="layer-card-header">
+      <span class="layer-badge">L0</span>
+      <div>
+        <div class="layer-card-title">Evidence</div>
+        <div class="layer-card-sub">Raw source materials — never edited, never interpreted</div>
+      </div>
+    </div>
+    <div style="padding:16px 24px 4px;">
+      <p style="font-size:13px;line-height:1.6;color:#3a1e00;margin-bottom:16px;">L0 is the product team's working materials. Everything here is a primary source. Nothing in L0 is an interpretation — it's a fact or a file. If a hex value appears in <code style="font-family:monospace;font-size:12px;background:rgba(255,255,255,0.4);padding:1px 5px;border-radius:3px;">Color_Palette.svg</code>, that's L0. The decision to use that color as the accent for a product line is L1.</p>
+    </div>
+    <div class="layer-card-body">
+      <div>
+        <div class="layer-col-label" style="color:#3a1e00;">Brand L0 files</div>
+        <ul class="file-list">
+          <li><span class="file-tag">Logo.svg</span> Master wordmark in all 4 colorway treatments. The gold sparkle (#f2c11e) is canonical here.</li>
+          <li><span class="file-tag">Color_Palette.svg</span> Every hex value in the system. Source of truth for all accent colors.</li>
+          <li><span class="file-tag">NeuzeitGrotesk-ExtraCondBlack.ttf</span> The header font. The single most recognizable typographic element.</li>
+          <li><span class="file-tag">Poppins-SemiBold.ttf</span> (+ other weights) Body and UI font for all templates.</li>
+          <li><span class="file-tag">Shapes.svg</span> Nine wave path variants, all in #a8cae4.</li>
+          <li><span class="file-tag">Sparkles_1–11.png</span> Per-palette sparkle cluster images.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="layer-col-label" style="color:#3a1e00;">Product L0 files</div>
+        <ul class="file-list">
+          <li>Clean product photos — cutout or near-cutout on neutral background</li>
+          <li>In-use / lifestyle photos — product on body (foot, hand, etc.)</li>
+          <li>Before/after customer photos — honest condition shots, real skin</li>
+          <li>Doctor portrait — professional, lab coat, warm pose</li>
+          <li>Doctor's handwritten signature scan</li>
+          <li>Reference carousel images (01–11) — completed examples attached to every generation call</li>
+          <li>COAs, spec sheets, supplier declarations (if claims require verification)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding:0 24px 20px;">
+      <div class="gap-box">
+        <div class="gap-icon">!</div>
+        <div class="gap-content">
+          <strong>Gap — no formal L0 inventory</strong>
+          There is no master manifest of L0 files per SKU. If a product photo gets overwritten or a reference image goes missing, there's no audit trail. Recommendation: maintain a simple L0 manifest per product (filename, date added, source) so generation calls can always verify their inputs exist and are current.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L1 -->
+  <div class="layer-card l1">
+    <div class="layer-card-header">
+      <span class="layer-badge">L1</span>
+      <div>
+        <div class="layer-card-title">Primitives</div>
+        <div class="layer-card-sub">Immutable brand truth derived from L0 — facts, not interpretations</div>
+      </div>
+    </div>
+    <div style="padding:16px 24px 4px;">
+      <p style="font-size:13px;line-height:1.6;color:#1a2f50;margin-bottom:16px;">L1 is what you extract from L0 and lock. It does not change unless the brand itself changes. An agent loading L1 knows everything it needs to produce brand-consistent output — without ever seeing an L0 file. These three files live permanently in the Claude Project and are inherited by every conversation automatically.</p>
+    </div>
+    <div class="layer-card-body">
+      <div>
+        <div class="layer-col-label" style="color:#1a2f50;">global-rules.md</div>
+        <ul class="file-list">
+          <li>Two-font stack — Neuzeit Grotesk ExtCond Black (headers) + Poppins (everything else)</li>
+          <li>Two-tone header rule — mandatory at 140pt+, no exceptions</li>
+          <li>Sparkle anatomy — 3-sparkle cluster config, 2-color rule, placement rules</li>
+          <li>Canvas spec — 2000×2000px square, mobile-first at 375px</li>
+          <li>Seven layout principles (product always visible, one message per image, etc.)</li>
+          <li>Logo colorway rules — which version to use on which background</li>
+          <li>Wave shape placement rules</li>
+        </ul>
+      </div>
+      <div>
+        <div class="layer-col-label" style="color:#1a2f50;">color-system.md + reusable-elements.md</div>
+        <ul class="file-list">
+          <li>All fixed hex values — #1d396a, #fef5e3, #a8cae4 — never change across SKUs</li>
+          <li>Six product line accent palettes with primary, secondary, and support hex values</li>
+          <li>Dark background rule — what changes when background is navy</li>
+          <li>Wave shape — 9 variants, color rules, placement rules</li>
+          <li>Pop-out circle detail — anatomy, outline color, arrow matching rule</li>
+          <li>Badge construction — white icon on complementary color, 4–6 max</li>
+          <li>Connecting arrow color rule — must inherit exact header accent hex</li>
+          <li>Authority signature block — authenticity rules for doctor's signature</li>
+          <li>Day-count badge spec — pill shape, accent fill, specificity rule</li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding:0 24px 20px;">
+      <div class="gap-box">
+        <div class="gap-icon">!</div>
+        <div class="gap-content">
+          <strong>Gap — pink/rose palette not fully documented</strong>
+          The pink/rose accent palette (used for Fuzzy Heel Socks) is noted as product-specific and not extracted into color-system.md. The designer must supply the hex at brief time. This should be formalized as a named palette entry with primary, secondary, and sparkle-support hex values locked.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L2 -->
+  <div class="layer-card l2">
+    <div class="layer-card-header">
+      <span class="layer-badge">L2</span>
+      <div>
+        <div class="layer-card-title">Locked Judgment</div>
+        <div class="layer-card-sub">Where valid L1 interpretations get picked once and locked</div>
+      </div>
+    </div>
+    <div style="padding:16px 24px 4px;">
+      <p style="font-size:13px;line-height:1.6;color:#e8f0f8;margin-bottom:16px;">L2 is the decision layer. L1 defines the rules; L2 makes the calls. The 11 template .md files are the core of L2 — each one locks a carousel slot's layout variant choices, element requirements, and review criteria. Named positionings (audience-specific variants) live at L2. So does the competitive framing for comparison charts.</p>
+    </div>
+    <div class="layer-card-body">
+      <div>
+        <div class="layer-col-label" style="color:#a8cae4;">What each template .md file locks</div>
+        <ul class="file-list" style="color:var(--cream);">
+          <li>Which layout variants are available and when to choose each</li>
+          <li>Every required design element and its placement rule</li>
+          <li>Typography sizes and weight roles specific to that template</li>
+          <li>Color guidance for that template's zones</li>
+          <li>Common mistakes to avoid — the negative spec</li>
+          <li>The complete variable list — every placeholder that must be filled</li>
+          <li>What "correct" looks like — the review criteria</li>
+        </ul>
+      </div>
+      <div>
+        <div class="layer-col-label" style="color:#a8cae4;">Named positionings (template variants)</div>
+        <ul class="file-list" style="color:var(--cream);">
+          <li>Template 09 — Before/After vs. Product Benefit vs. Multi-Problem Grid</li>
+          <li>Template 08 — Light background vs. Dark background variant</li>
+          <li>Template 06 — How It Works vs. How To Use vs. How To Wear</li>
+          <li>Template 11 — Gifting variant vs. Product Family variant</li>
+          <li>Template 03 — Light header block vs. Deep navy header block</li>
+          <li>All variants inherit the base rules from global-rules.md (L1)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding:0 24px 20px;">
+      <div class="gap-box" style="background:#1a2f50;border-color:#a8cae4;">
+        <div class="gap-icon" style="background:var(--sky);color:var(--navy);">!</div>
+        <div class="gap-content" style="color:var(--cream);">
+          <strong style="color:var(--sky);">Gap — brand L2 is implicit, not documented</strong>
+          Brand voice, anti-positioning, and reserved language currently live in people's heads. There is no <code style="font-family:monospace;font-size:12px;background:rgba(255,255,255,0.1);padding:1px 5px;border-radius:3px;">brand-positioning.md</code> file at L2. This means an agent could produce technically correct output (L1 rules followed) that is brand-wrong (wrong tone, wrong claim tier). Recommendation: create a one-page brand-positioning.md that locks voice, anti-positioning, and claim hierarchy.
+        </div>
+      </div>
+      <div class="gap-box" style="background:#1a2f50;border-color:#a8cae4;margin-top:12px;">
+        <div class="gap-icon" style="background:var(--sky);color:var(--navy);">!</div>
+        <div class="gap-content" style="color:var(--cream);">
+          <strong style="color:var(--sky);">Gap — no product-line spec file per SKU family</strong>
+          Which of the 11 slots are active for each product line, and which variants are chosen, is decided per-project rather than locked in a file. A one-page <code style="font-family:monospace;font-size:12px;background:rgba(255,255,255,0.1);padding:1px 5px;border-radius:3px;">sku-family-spec.md</code> per product line would make L3 fully deterministic.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L3 -->
+  <div class="layer-card l3">
+    <div class="layer-card-header">
+      <span class="layer-badge">L3</span>
+      <div>
+        <div class="layer-card-title">Production</div>
+        <div class="layer-card-sub">Four modalities that turn primitives into assets</div>
+      </div>
+    </div>
+    <div style="padding:16px 24px 4px;">
+      <p style="font-size:13px;line-height:1.6;color:#e0f2f0;margin-bottom:16px;">L3 never invents — it renders. Every L3 action is downstream of a locked primitive bundle (L1 + L2 from all three pyramids). The four modalities are not alternatives — they work in sequence: Claude reads the primitives and fills the prompt template, the generator renders the image, the human reviews it.</p>
+    </div>
+    <div class="layer-card-body">
+      <div>
+        <div class="layer-col-label" style="color:#b8dedd;">The four modalities</div>
+        <ul class="file-list" style="color:#e0f2f0;">
+          <li><strong style="color:var(--cream);">DFO_Prompt_Templates.md</strong> — Fill-in-the-blank generation prompts for all 11 slots. One block per template type.</li>
+          <li><strong style="color:var(--cream);">Claude (judgment)</strong> — Reads L1 + L2, makes variant decisions, fills prompt placeholders, writes the two-tone headline split.</li>
+          <li><strong style="color:var(--cream);">GPT Image 2 / Nano Banana</strong> — The image generator. Receives filled prompt + reference image + product photo. Renders L4.</li>
+          <li><strong style="color:var(--cream);">Human designer</strong> — Reviews output against Judges criteria. Approves or sends back to L3 with refinement notes.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="layer-col-label" style="color:#b8dedd;">How to assemble a primitive bundle</div>
+        <ul class="file-list" style="color:#e0f2f0;">
+          <li>From Brand pyramid: L1 global-rules.md + color-system.md + reusable-elements.md</li>
+          <li>From Product Line pyramid: L1 accent hex values + L2 active slot list + variant rules</li>
+          <li>From Product pyramid: L1 product fact sheet + L2 filled prompt template + headline copy</li>
+          <li>Attach: reference carousel image for this slot + product photo</li>
+          <li>Never load all 11 template files at once — only the one slot being built</li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding:0 24px 20px;">
+      <div class="gap-box" style="background:#023f46;border-color:#10ada8;">
+        <div class="gap-icon" style="background:var(--teal-light);color:white;">!</div>
+        <div class="gap-content" style="color:#e0f2f0;">
+          <strong style="color:#10ada8;">Gap — no automated pipeline yet</strong>
+          L3 currently runs manually. The design-brain-action-plan.md outlines an n8n workflow (4 nodes: receive → LLM prompt → generate → save) but it hasn't been built yet. Recommendation: build only after manual runs are reliable across all 11 template types. Automating a broken process makes failures faster.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L4 -->
+  <div class="layer-card l4">
+    <div class="layer-card-header">
+      <span class="layer-badge">L4</span>
+      <div>
+        <div class="layer-card-title">Generated Assets</div>
+        <div class="layer-card-sub">Finished carousel images — disposable, regenerated as primitives evolve</div>
+      </div>
+    </div>
+    <div style="padding:16px 24px 4px;">
+      <p style="font-size:13px;line-height:1.6;color:var(--navy-deep);margin-bottom:16px;">L4 is the only layer that is meant to change. These are the outputs, not the source of truth. When a primitive changes (new product photo, updated accent palette, revised benefit claim), L4 is regenerated — not edited in place. Editing L4 directly is always wrong; it severs the audit trail.</p>
+    </div>
+    <div class="layer-card-body">
+      <div>
+        <div class="layer-col-label" style="color:var(--navy);">The 11 carousel outputs</div>
+        <ul class="file-list">
+          <li>01_Feature_Dominant — lead image, product dominant</li>
+          <li>02_Comparison_Chart — competitive framing</li>
+          <li>03_Use_Case_A — lifestyle / context, multi-scenario</li>
+          <li>04_Product_Details — what's in the box, dimensions</li>
+          <li>05_Use_Case_B — single item feature callout</li>
+          <li>06_How_It_Works — step-by-step application</li>
+          <li>07_Sizing_Chart — measurement guide</li>
+          <li>08_Doctor_Developed — physician credibility</li>
+          <li>09_Problem_Solution — before/after, condition coverage</li>
+          <li>10_Social_Proof — press logos, earned media</li>
+          <li>11_Cross_Sell — gifting or product family</li>
+        </ul>
+      </div>
+      <div>
+        <div class="layer-col-label" style="color:var(--navy);">Auditability requirements</div>
+        <ul class="file-list">
+          <li>Each L4 file should record which primitive bundle produced it</li>
+          <li>Wrong claim in output → trace to L1 product fact sheet</li>
+          <li>Wrong layout → trace to L2 template .md file</li>
+          <li>Wrong color → trace to L1 color-system.md accent palette</li>
+          <li>Wrong variant chosen → trace to L2 SKU family spec</li>
+          <li>Never edit L4 directly — fix the primitive and regenerate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SECTION 4: THREE PYRAMIDS ── -->
+<div class="section" id="pyramids">
+  <div class="section-header">
+    <span class="section-number">04</span>
+  </div>
+  <h2>Three pyramids</h2>
+  <p class="section-lead">L0 + L1 + L2 exist at three levels — brand, product line, and product. A complete primitive bundle draws from all three pyramids before generation begins.</p>
+
+  <div class="pyramids-wrap">
+    <div class="pyramids-title">Brand · Product Line · Product — each contributes L0 + L1 + L2 to the primitive bundle</div>
+    <div class="pyramids-grid">
+
+      <div class="pyramid-wrap">
+        <svg width="180" height="130" viewBox="0 0 180 130">
+          <polygon points="90,10 170,120 10,120" fill="#c8d5e8" stroke="#1d396a" stroke-width="1.5"/>
+          <polygon points="90,10 148,84 32,84" fill="#a8bdd8"/>
+          <polygon points="90,10 120,52 60,52" fill="#7a9bc0"/>
+          <line x1="32" y1="84" x2="148" y2="84" stroke="#1d396a" stroke-width="0.8" opacity="0.5"/>
+          <line x1="60" y1="52" x2="120" y2="52" stroke="#1d396a" stroke-width="0.8" opacity="0.5"/>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#fef5e3" x="90" y="38" text-anchor="middle" dominant-baseline="central">L2</text>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#fef5e3" x="90" y="70" text-anchor="middle" dominant-baseline="central">L1</text>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#1d396a" x="90" y="105" text-anchor="middle" dominant-baseline="central">L0</text>
+        </svg>
+        <div class="pyramid-name">BRAND</div>
+        <div class="pyramid-sub">shared identity across all product lines</div>
+        <ul class="p-layer-list">
+          <li class="l0-navy"><strong>L0</strong> Logo.svg · Color_Palette.svg · brand fonts (.ttf)</li>
+          <li class="l1-navy"><strong>L1</strong> global-rules.md · color-system.md · reusable-elements.md</li>
+          <li class="l2-navy"><strong>L2</strong> brand voice · anti-positioning · reserved language <em style="color:var(--red-soft);font-size:10px;">[gap — not yet documented]</em></li>
+        </ul>
+      </div>
+
+      <div class="pyramid-wrap">
+        <svg width="180" height="130" viewBox="0 0 180 130">
+          <polygon points="90,10 170,120 10,120" fill="#b8dedd" stroke="#186972" stroke-width="1.5"/>
+          <polygon points="90,10 148,84 32,84" fill="#7fc4c2"/>
+          <polygon points="90,10 120,52 60,52" fill="#3a9e9a"/>
+          <line x1="32" y1="84" x2="148" y2="84" stroke="#186972" stroke-width="0.8" opacity="0.5"/>
+          <line x1="60" y1="52" x2="120" y2="52" stroke="#186972" stroke-width="0.8" opacity="0.5"/>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#fef5e3" x="90" y="38" text-anchor="middle" dominant-baseline="central">L2</text>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#fef5e3" x="90" y="70" text-anchor="middle" dominant-baseline="central">L1</text>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#186972" x="90" y="105" text-anchor="middle" dominant-baseline="central">L0</text>
+        </svg>
+        <div class="pyramid-name">PRODUCT LINE</div>
+        <div class="pyramid-sub">one accent palette · one synthesized positioning</div>
+        <ul class="p-layer-list">
+          <li class="l0-teal"><strong>L0</strong> Shapes.svg · Sparkle_1–11.png · reference carousel images</li>
+          <li class="l1-teal"><strong>L1</strong> Accent hex values · wave color · sparkle set for this line</li>
+          <li class="l2-teal"><strong>L2</strong> Active slots · variant rules per slot · comparison framing <em style="color:var(--red-soft);font-size:10px;">[gap — not yet per-file]</em></li>
+        </ul>
+      </div>
+
+      <div class="pyramid-wrap">
+        <svg width="180" height="130" viewBox="0 0 180 130">
+          <polygon points="90,10 170,120 10,120" fill="#f8d9a8" stroke="#e28433" stroke-width="1.5"/>
+          <polygon points="90,10 148,84 32,84" fill="#f0b86a"/>
+          <polygon points="90,10 120,52 60,52" fill="#e28433"/>
+          <line x1="32" y1="84" x2="148" y2="84" stroke="#e28433" stroke-width="0.8" opacity="0.5"/>
+          <line x1="60" y1="52" x2="120" y2="52" stroke="#e28433" stroke-width="0.8" opacity="0.5"/>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#fef5e3" x="90" y="38" text-anchor="middle" dominant-baseline="central">L2</text>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#fef5e3" x="90" y="70" text-anchor="middle" dominant-baseline="central">L1</text>
+          <text font-family="sans-serif" font-size="10" font-weight="700" fill="#e28433" x="90" y="105" text-anchor="middle" dominant-baseline="central">L0</text>
+        </svg>
+        <div class="pyramid-name">PRODUCT</div>
+        <div class="pyramid-sub">product brief + named template variants</div>
+        <ul class="p-layer-list">
+          <li class="l0-org"><strong>L0</strong> Product photos · before/after · doctor portrait · COAs</li>
+          <li class="l1-org"><strong>L1</strong> Product fact sheet · canonical imagery · benefit claims</li>
+          <li class="l2-org"><strong>L2</strong> Filled prompt template · chosen variants · headline copy</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>How the bundle composes:</strong> When an agent builds carousel slot 9 for SKU X, it pulls L1 + L2 from all three pyramids simultaneously — brand rules + product line accent + product brief — and hands the combined bundle to L3. No pyramid is optional. Missing one means the output is either brand-wrong, palette-wrong, or product-wrong.
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SECTION 5: 11 TEMPLATES ── -->
+<div class="section" id="templates">
+  <div class="section-header">
+    <span class="section-number">05</span>
+  </div>
+  <h2>The 11 carousel templates</h2>
+  <p class="section-lead">Each template is a locked L2 file. It defines one carousel slot's job, layout variants, required elements, and review criteria. Load only the template you need — never all 11 at once.</p>
+
+  <div class="template-grid">
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 01</div>
+      <h4>Feature Dominant</h4>
+      <p>Lead image. Product large, benefit callouts supporting. Sets the visual tone for the whole carousel.</p>
+      <div class="template-slot">Slot 1 or 2</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 02</div>
+      <h4>Comparison Chart</h4>
+      <p>Visual argument — DFO column saturated and dominant, competitor columns receding. Never name real brands.</p>
+      <div class="template-slot">Slot 3 or 4</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 03</div>
+      <h4>Use Case A — Lifestyle</h4>
+      <p>Context image. Multiple scenarios showing where and how the product is used on the body.</p>
+      <div class="template-slot">Slot 4 or 5</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 04</div>
+      <h4>Product Details</h4>
+      <p>What's in the box. Large quantity number as hero. Measurements annotated with leader lines.</p>
+      <div class="template-slot">Slot 5 or 6</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 05</div>
+      <h4>Use Case B — Feature Callout</h4>
+      <p>Single product, pop-out circle detail, icon badges. The "prove it" image.</p>
+      <div class="template-slot">Slot 4 or 5</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 06</div>
+      <h4>How It Works / How To Use</h4>
+      <p>Step-by-step panels. Step numbers at 120pt dominant. Arrows inherit header accent color.</p>
+      <div class="template-slot">Slot 5 or 6</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 07</div>
+      <h4>Sizing Chart</h4>
+      <p>Grid with tonal row variation. Highlighted row in accent. Measurement photo. Care badges.</p>
+      <div class="template-slot">Slot 6 or 7</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 08</div>
+      <h4>Doctor Developed</h4>
+      <p>Physician credibility. Portrait + handwritten signature + credentials. Body copy in doctor's voice — not a feature list.</p>
+      <div class="template-slot">Slot 3 or 7</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 09</div>
+      <h4>Problem Solution</h4>
+      <p>3 variants: Before/After · Product Benefit · Multi-Problem Grid. Most emotionally direct template.</p>
+      <div class="template-slot">Slot 2 or 3</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 10</div>
+      <h4>Social Proof</h4>
+      <p>As Seen On logo bar + earned press + witty header ("TWO TOES UP"). Most creative latitude.</p>
+      <div class="template-slot">Slot 7 or 8</div>
+    </div>
+    <div class="template-card">
+      <div class="template-card-num">TEMPLATE 11</div>
+      <h4>Cross Sell</h4>
+      <p>2 variants: Gifting · Product Family. Last image — deepens the purchase occasion.</p>
+      <div class="template-slot">Slot 8 or 9</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SECTION 6: COLOR SYSTEM ── -->
+<div class="section" id="colors">
+  <div class="section-header">
+    <span class="section-number">06</span>
+  </div>
+  <h2>Color system</h2>
+  <p class="section-lead">Colors shift per product line. The structure is constant — only the accent palette changes. Fixed colors never change regardless of SKU.</p>
+
+  <h3 style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:12px;">Fixed colors — never change across any product line</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-dot" style="background:#1d396a;"></div><div class="swatch-info"><div class="swatch-name">Deep Navy</div><div class="swatch-hex">#1d396a</div></div></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#231f20;"></div><div class="swatch-info"><div class="swatch-name">Near Black</div><div class="swatch-hex">#231f20</div></div></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#fef5e3;border:1px solid #d3d1c7;"></div><div class="swatch-info"><div class="swatch-name">Warm Cream</div><div class="swatch-hex">#fef5e3</div></div></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#a8cae4;"></div><div class="swatch-info"><div class="swatch-name">Sky Blue (wave)</div><div class="swatch-hex">#a8cae4</div></div></div>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:600;color:var(--navy);margin:24px 0 12px;">Product line accent palettes</h3>
+  <table class="rules-table">
+    <thead>
+      <tr>
+        <th>Product line</th>
+        <th>Primary accent</th>
+        <th>Secondary accent</th>
+        <th>Example products</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Navy / Teal</strong></td>
+        <td><code>#186972</code> Teal</td>
+        <td><code>#10ada8</code> Aqua</td>
+        <td>Compression Gloves, Arch Support Sleeves</td>
+      </tr>
+      <tr>
+        <td><strong>Blue</strong></td>
+        <td><code>#2c90ca</code> Bright Blue</td>
+        <td><code>#a8cae4</code> Sky Blue</td>
+        <td>Better Blister Bandages, Hydrocolloid</td>
+      </tr>
+      <tr>
+        <td><strong>Orange / Amber</strong></td>
+        <td><code>#e28433</code> Warm Orange</td>
+        <td><code>#f6ab25</code> Amber Gold</td>
+        <td>Gel Heel Socks (some colorways)</td>
+      </tr>
+      <tr>
+        <td><strong>Red / Maroon</strong></td>
+        <td><code>#ac382d</code> Deep Maroon</td>
+        <td><code>#f6ab25</code> Amber</td>
+        <td>Heel Socks (gift packaging)</td>
+      </tr>
+      <tr>
+        <td><strong>Green / Sage</strong></td>
+        <td><code>#3d5d2b</code> Forest Green</td>
+        <td><code>#719484</code> Sage</td>
+        <td>Foot Cream (FC01)</td>
+      </tr>
+      <tr>
+        <td><strong>Pink / Rose</strong></td>
+        <td><em>Supplied at brief time</em></td>
+        <td><em>Matches product material color</em></td>
+        <td>Fuzzy Heel Socks <span style="color:var(--red-soft);font-size:11px;">[gap — not in color-system.md]</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SECTION 7: JUDGES ── -->
+<div class="section" id="judges">
+  <div class="section-header">
+    <span class="section-number">07</span>
+  </div>
+  <h2>Judges</h2>
+  <p class="section-lead">Three named judges observe every L4 output before it saves to the carousel. Each judge has a defined scope. Fail any one → revise and regenerate.</p>
+
+  <div class="judges-grid">
+    <div class="judge-card">
+      <div class="judge-card-icon">✓</div>
+      <h4>Truth</h4>
+      <p>Before/after photos are real customer imagery — not retouched or theatrical. Day counts are accurate and reflect typical outcomes. Press logos are only used for actual earned coverage. Measurements are correct. Sales milestones are verified.</p>
+    </div>
+    <div class="judge-card">
+      <div class="judge-card-icon">≡</div>
+      <h4>Alignment</h4>
+      <p>Two-tone header is present at correct size threshold (140pt+). Wave shape appears in the correct zone. Sparkle graphic is present and correctly sized. Product is visible in every image. No template mixing — each slot has one job.</p>
+    </div>
+    <div class="judge-card">
+      <div class="judge-card-icon">★</div>
+      <h4>Brand</h4>
+      <p>Correct accent palette for the SKU family. DFO column is visually dominant in comparison charts. No fabricated claims. Media logos are not colorized to the product palette. Arrow color matches header accent exactly. Disclaimer present when required.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Tracing failures:</strong> If a judge rejects an output, the trace always leads back to a specific layer. Truth failures → trace to L0/L1 product facts. Alignment failures → trace to L2 template .md file. Brand failures → trace to L1 color-system.md or L2 template rules.
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SECTION 8: PIPELINE ── -->
+<div class="section" id="pipeline">
+  <div class="section-header">
+    <span class="section-number">08</span>
+  </div>
+  <h2>Build pipeline — three phases</h2>
+  <p class="section-lead">The design-brain-action-plan.md outlines three phases. Phase 1 is complete. Phases 2 and 3 are in progress.</p>
+
+  <h3 style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:12px;">Phase 1 — Storage layer <span style="color:var(--teal);font-size:13px;font-weight:400;margin-left:8px;">✓ Complete</span></h3>
+  <div class="phase-list">
+    <div class="phase-item">
+      <div class="phase-num">1</div>
+      <div><h4>Split Design.md into 11 template files</h4><p>Each file is fully self-contained — someone can read only that file and know everything needed to produce that template.</p></div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-num">2</div>
+      <div><h4>Create 3 supporting files</h4><p>global-rules.md · color-system.md · reusable-elements.md — the L1 brand brain that every template inherits from.</p></div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-num">3</div>
+      <div><h4>Build reference image library</h4><p>Crop each completed template example into its own labeled file. These attach to every generation call as visual reference.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:600;color:var(--navy);margin:28px 0 12px;">Phase 2 — Retrieval layer <span style="color:var(--orange);font-size:13px;font-weight:400;margin-left:8px;">In progress</span></h3>
+  <div class="phase-list">
+    <div class="phase-item">
+      <div class="phase-num">4</div>
+      <div><h4>Write prompt templates for all 11 slots</h4><p>DFO_Prompt_Templates.md — fill-in-the-blank with {{PLACEHOLDERS}}. Written once, reused accurately every time.</p></div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-num">5</div>
+      <div><h4>Set up Claude Project</h4><p>One project per company. Upload all 11 template files + reference image library. Every conversation inherits the brand brain automatically.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:600;color:var(--navy);margin:28px 0 12px;">Phase 3 — Action layer <span style="color:var(--gray);font-size:13px;font-weight:400;margin-left:8px;">Not started</span></h3>
+  <div class="phase-list">
+    <div class="phase-item">
+      <div class="phase-num">6</div>
+      <div><h4>Manual end-to-end test</h4><p>One filled prompt + reference image + product photo → GPT Image 2. Validate before automating anything. Run across all 11 template types.</p></div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-num">7</div>
+      <div><h4>Build n8n workflow</h4><p>Four nodes: receive product image + template type → Claude API produces prompt → GPT Image 2 generates → save to folder. Build only after manual runs are reliable.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SECTION 9: GAP ANALYSIS ── -->
+<div class="section" id="gaps">
+  <div class="section-header">
+    <span class="section-number">09</span>
+  </div>
+  <h2>Gap analysis</h2>
+  <p class="section-lead">What exists, what's missing, and the recommended next file to create for each gap.</p>
+
+  <table class="rules-table">
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Gap</th>
+        <th>Impact</th>
+        <th>Recommended fix</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Brand L2</strong></td>
+        <td>No brand-positioning.md — voice, anti-positioning, and reserved language are implicit</td>
+        <td>Agent can produce technically correct but brand-wrong output</td>
+        <td>Create <code>brand-positioning.md</code> — one page locking voice, anti-positioning, claim hierarchy</td>
+      </tr>
+      <tr>
+        <td><strong>Product Line L2</strong></td>
+        <td>No per-SKU-family spec file — active slots and variant choices are decided per-project</td>
+        <td>L3 is not fully deterministic; same SKU can produce different slot sets in different sessions</td>
+        <td>Create <code>sku-family-spec.md</code> per product line — active slots + chosen variants + comparison framing</td>
+      </tr>
+      <tr>
+        <td><strong>Product Line L1</strong></td>
+        <td>Pink/rose palette not extracted into color-system.md</td>
+        <td>Designer must supply hex at brief time; inconsistency risk across sessions</td>
+        <td>Add pink/rose palette entry to color-system.md with primary, secondary, and sparkle-support hex</td>
+      </tr>
+      <tr>
+        <td><strong>Product L0</strong></td>
+        <td>No L0 manifest per SKU — no audit trail for source files</td>
+        <td>Missing or overwritten photos not detected until generation fails</td>
+        <td>Create a simple L0 manifest per product (filename, date added, source, last verified)</td>
+      </tr>
+      <tr>
+        <td><strong>L4 Auditability</strong></td>
+        <td>Generated images don't record which primitive bundle produced them</td>
+        <td>Can't trace a wrong claim or wrong layout back to source without re-running</td>
+        <td>Add metadata to each L4 file recording the primitive bundle used (template slot, SKU, variant, date)</td>
+      </tr>
+      <tr>
+        <td><strong>L3 Automation</strong></td>
+        <td>No n8n workflow — pipeline runs manually</td>
+        <td>High labor cost per carousel; doesn't scale across multiple SKUs</td>
+        <td>Build after manual runs are reliable across all 11 template types — not before</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- end page -->
+
+<footer>
+  <strong>DFO Design System — Primitives Documentation</strong><br>
+  Mapped to BP Trading Co. Primitives Framework v0.4 · Document v2.0 · 2026-05-20<br>
+  <span style="margin-top:6px;display:block;">Questions → trace any issue to its layer. Wrong output is always a primitive problem, not a generation problem.</span>
+</footer>
+
+</body>
+</html>

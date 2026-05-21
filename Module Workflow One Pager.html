@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DFO · Primitives Pipeline — One Pager</title>
+<meta name="viewport" content="width=1280">
+<style>
+  @font-face {
+    font-family: "Neuzeit Grotesk ExtCond";
+    src: url("fonts/NeuzeitGrotesk-ExtraCondBlack.ttf") format("truetype");
+    font-weight: 900; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: "Poppins";
+    src: url("fonts/Poppins-SemiBold.ttf") format("truetype");
+    font-weight: 600; font-style: normal; font-display: swap;
+  }
+
+  :root {
+    --navy: #0C1B44;
+    --navy-600: #1d396a;
+    --navy-800: #081232;
+    --paper: #F7F4EE;
+    --sand: #EAE3D5;
+    --orange: #F3821E;
+    --orange-soft: #FDE7CF;
+    --orange-deep: #D86B08;
+    --sky: #53A2ED;
+    --sky-200: #A1CDF6;
+    --sky-50: #E4F0FB;
+    --ink-900: #0C1B44;
+    --ink-700: #2B3658;
+    --ink-500: #5C6585;
+    --stone-200: #D8D2C5;
+    --stone-300: #C2BBA9;
+    --display: "Neuzeit Grotesk ExtCond", "Arial Narrow", sans-serif;
+    --body: "Poppins", system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #51596F;
+    font-family: var(--body);
+    color: var(--ink-900);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    padding: 40px 0;
+  }
+
+  /* The page itself — fixed 1280 wide so screenshot is deterministic.
+     Designed to print to US Letter portrait. */
+  .page {
+    width: 1280px;
+    margin: 0 auto;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+    padding: 64px 72px 56px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  }
+
+  /* Decorative top stripe + corner mark */
+  .page::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 10px;
+    background: var(--orange);
+  }
+  .corner-mark {
+    position: absolute;
+    top: 32px; right: 56px;
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 14px;
+    color: var(--orange);
+  }
+
+  /* ───── Header ───── */
+  header.hd {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-bottom: 36px;
+    margin-top: 12px;
+  }
+  .hd-num {
+    font-family: var(--display);
+    font-size: 124px;
+    line-height: 0.85;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .hd-num::after {
+    content: "";
+    position: absolute;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--orange);
+    right: -18px; top: 8px;
+  }
+  .hd-eyebrow {
+    font-family: var(--body);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 12px;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .hd-title {
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 64px;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    margin: 0 0 14px;
+  }
+  .hd-sub {
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--ink-700);
+    max-width: 800px;
+    margin: 0;
+  }
+  .hd-sub b { color: var(--navy); font-weight: 600; }
+
+  /* ───── Pipeline (the big visual) ───── */
+  .pipe {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+  .layer {
+    position: relative;
+    border-radius: 16px;
+    padding: 18px 24px 20px;
+    display: grid;
+    grid-template-columns: 92px 1fr 280px;
+    align-items: center;
+    gap: 24px;
+  }
+  .layer .l-badge {
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  .layer .l-name {
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: 0.005em;
+    margin-bottom: 4px;
+  }
+  .layer .l-what {
+    font-size: 13.5px;
+    line-height: 1.45;
+    opacity: 0.92;
+    max-width: 540px;
+  }
+  .layer .l-locks {
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+    font-size: 11px;
+    line-height: 1.55;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.16);
+  }
+  .layer .l-locks b {
+    display: block;
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+  .layer.dark .l-locks { background: rgba(255,255,255,0.10); color: #fff; }
+
+  /* color variants */
+  .layer.L0 { background: var(--orange); color: var(--navy); }
+  .layer.L1 { background: var(--navy); color: #fff; }
+  .layer.L2 { background: var(--navy-600); color: #fff; }
+  .layer.L25 { background: #fff; color: var(--navy); border: 2px dashed var(--orange); }
+  .layer.L3 { background: var(--sky); color: #fff; }
+  .layer.L4 { background: var(--sky-200); color: var(--navy); }
+  .layer.L25 .l-locks { background: var(--paper); color: var(--ink-700); }
+  .layer.L25 .l-locks b { color: var(--orange-deep); }
+
+  .layer.L25::after {
+    content: "RUNTIME";
+    position: absolute;
+    top: -10px; left: 110px;
+    background: var(--orange);
+    color: #fff;
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+
+  /* downward arrow between layers */
+  .arrow-down {
+    text-align: center;
+    color: var(--ink-500);
+    font-size: 11px;
+    margin: -2px 0 -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+  .arrow-down svg { width: 12px; height: 12px; }
+
+  /* ───── How an agent uses this (simplified 4-step strip) ───── */
+  .agent {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(12,27,68,0.10);
+    padding: 22px 24px 24px;
+    margin-bottom: 16px;
+  }
+  .agent-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .agent-head h2 {
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--navy);
+    margin: 0;
+  }
+  .agent-head .a-eye {
+    font-family: var(--body);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    color: var(--orange);
+  }
+  .agent-head .a-req {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ink-700);
+    background: var(--paper);
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .agent-head .a-req::before {
+    content: "▸ ";
+    color: var(--orange);
+  }
+  .agent-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .a-step {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 14px 14px 16px;
+    position: relative;
+  }
+  .a-step::after {
+    content: "→";
+    position: absolute;
+    right: -10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--orange);
+    font-family: var(--display);
+    font-size: 18px;
+    z-index: 2;
+  }
+  .a-step:last-child::after { content: none; }
+  .a-step-num {
+    width: 22px; height: 22px;
+    background: var(--orange);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--display);
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .a-step-title {
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 17px;
+    line-height: 1;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .a-step-layer {
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    margin-bottom: 8px;
+  }
+  .a-step-body {
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--ink-700);
+  }
+
+  /* ───── Lower row: judges + failure routing ───── */
+  .lower {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 24px;
+    border: 1px solid rgba(12,27,68,0.10);
+  }
+  .card-eyebrow {
+    font-family: var(--body);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--navy);
+    margin: 0 0 14px;
+  }
+
+  /* Judges block */
+  .judge-rows {
+    display: grid;
+    gap: 10px;
+  }
+  .judge-row {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .judge-mark {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--display);
+    font-size: 15px;
+  }
+  .judge-row:nth-child(1) .judge-mark { background: var(--orange); }
+  .judge-row:nth-child(2) .judge-mark { background: var(--navy); }
+  .judge-row:nth-child(3) .judge-mark { background: var(--sky); }
+  .judge-row strong {
+    display: block;
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 2px;
+    letter-spacing: 0.02em;
+  }
+  .judge-row p {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: var(--ink-700);
+  }
+
+  /* Failure routing */
+  .fail-list {
+    display: grid;
+    gap: 8px;
+  }
+  .fail-row {
+    display: grid;
+    grid-template-columns: 1fr 44px;
+    gap: 12px;
+    align-items: center;
+    background: var(--paper);
+    padding: 9px 12px;
+    border-radius: 10px;
+  }
+  .fail-row strong {
+    display: block;
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var(--navy);
+    margin-bottom: 1px;
+    letter-spacing: 0.02em;
+  }
+  .fail-row span.s {
+    font-size: 11.5px;
+    line-height: 1.35;
+    color: var(--ink-700);
+  }
+  .fail-tag {
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-size: 13px;
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 0;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+  .fail-row.L1 .fail-tag { background: var(--navy); }
+  .fail-row.L2 .fail-tag { background: var(--navy-600); }
+  .fail-row.L25 .fail-tag { background: var(--orange); }
+  .fail-row.L3 .fail-tag { background: var(--sky); }
+
+  /* ───── Footer ───── */
+  footer.ft {
+    margin-top: 12px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(12,27,68,0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11px;
+    color: var(--ink-500);
+    letter-spacing: 0.04em;
+  }
+  footer.ft b { color: var(--navy); font-weight: 600; }
+
+  /* ───── Toolbar (screen only — hidden on print/screenshot via .clean) ───── */
+  .toolbar {
+    position: fixed;
+    top: 16px; right: 16px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+  .toolbar button {
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: #fff;
+    color: var(--navy);
+    border: none;
+    border-radius: 999px;
+    padding: 10px 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    transition: background 140ms cubic-bezier(.22,.61,.36,1), color 140ms cubic-bezier(.22,.61,.36,1);
+  }
+  .toolbar button:hover { background: var(--orange); color: #fff; }
+  .toolbar .hint {
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    align-self: center;
+    margin-right: 4px;
+    max-width: 200px;
+    line-height: 1.4;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; }
+    .toolbar { display: none; }
+    @page { size: letter portrait; margin: 0; }
+  }
+
+  /* Export mode — toggled via body.export class for clean screenshot */
+  body.export { padding: 0; background: #fff; }
+  body.export .toolbar { display: none; }
+  body.export .page { box-shadow: none; }
+</style>
+</head>
+<body class="export">
+
+<div class="page" id="page">
+  <span class="corner-mark">DFO · One Pager</span>
+
+  <header class="hd">
+    <div class="hd-num">02</div>
+    <div>
+      <div class="hd-eyebrow">Module Workflow · at a glance</div>
+      <h1 class="hd-title">How we use primitives</h1>
+      <p class="hd-sub">A single shared pipeline takes <b>raw evidence (L0)</b> through <b>locked rules (L1–L2)</b>, gets <b>filled at runtime (L2.5)</b>, is <b>rendered (L3)</b>, and is <b>reviewed by the judges (L4)</b>. Read top-down to follow the flow.</p>
+    </div>
+  </header>
+
+  <!-- ── PIPELINE ── -->
+  <div class="pipe">
+
+    <div class="layer L0">
+      <div class="l-badge">L0</div>
+      <div>
+        <div class="l-name">Evidence</div>
+        <div class="l-what">Raw source materials from the product team. Never edited, never interpreted — primary sources only.</div>
+      </div>
+      <div class="l-locks">
+        <b>What lives here</b>
+        Logo · Color_Palette · Shapes · Sparkles · Brand fonts · Product photos · Before/after photos · Doctor portrait
+      </div>
+    </div>
+
+    <div class="arrow-down">
+      <svg viewBox="0 0 12 12"><path d="M6 1v8M3 6l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      curated into
+    </div>
+
+    <div class="layer L1 dark">
+      <div class="l-badge">L1</div>
+      <div>
+        <div class="l-name">Primitives</div>
+        <div class="l-what">Immutable brand truth — facts, not interpretations. Locked once, inherited by every project automatically.</div>
+      </div>
+      <div class="l-locks">
+        <b>What's locked</b>
+        global-rules.md · color-system.md · reusable-elements.md — typography, two-tone header, sparkles, wave shapes, accent hex per SKU.
+      </div>
+    </div>
+
+    <div class="arrow-down">
+      <svg viewBox="0 0 12 12"><path d="M6 1v8M3 6l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      consumed by
+    </div>
+
+    <div class="layer L2 dark">
+      <div class="l-badge">L2</div>
+      <div>
+        <div class="l-name">Locked judgment</div>
+        <div class="l-what">11 template .md files — one decision per carousel slot. Locks layout variant, element rules, and what "correct" looks like.</div>
+      </div>
+      <div class="l-locks">
+        <b>The 11 slots</b>
+        01 Feature · 02 Comparison · 03 Lifestyle A · 04 Details · 05 Lifestyle B · 06 How It Works · 07 Sizing · 08 Doctor · 09 Problem/Solution · 10 Social Proof · 11 Cross Sell
+      </div>
+    </div>
+
+    <div class="arrow-down">
+      <svg viewBox="0 0 12 12"><path d="M6 1v8M3 6l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      filled at runtime
+    </div>
+
+    <div class="layer L25">
+      <div class="l-badge" style="color: var(--orange-deep);">L2.5</div>
+      <div>
+        <div class="l-name">Prompt assembly</div>
+        <div class="l-what">Claude reads the bundle (L1 + L2 + product brief + reference image) and writes the <code style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; padding: 1px 4px; background: var(--orange-soft); border-radius: 3px;">{{PLACEHOLDER}}</code> values. The most skill-dependent step.</div>
+      </div>
+      <div class="l-locks">
+        <b>Output</b>
+        Concrete copy + SKU accent hex + reference image — handed as one bundle to the renderer.
+      </div>
+    </div>
+
+    <div class="arrow-down">
+      <svg viewBox="0 0 12 12"><path d="M6 1v8M3 6l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      handed to renderer
+    </div>
+
+    <div class="layer L3 dark">
+      <div class="l-badge">L3</div>
+      <div>
+        <div class="l-name">Production</div>
+        <div class="l-what">Four modalities can render. The filled prompt + reference image are required inputs in every case — never one without the other.</div>
+      </div>
+      <div class="l-locks">
+        <b>Who renders</b>
+        DFO_Prompt_Templates.md · Claude (judgment) · GPT Image 2 / Nano Banana · Human designer
+      </div>
+    </div>
+
+    <div class="arrow-down">
+      <svg viewBox="0 0 12 12"><path d="M6 1v8M3 6l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      reviewed by the judges
+    </div>
+
+    <div class="layer L4">
+      <div class="l-badge">L4</div>
+      <div>
+        <div class="l-name">Generated assets</div>
+        <div class="l-what">Finished carousel images. Every candidate is reviewed by the judges before it's saved — fail traces back to the layer that caused it.</div>
+      </div>
+      <div class="l-locks" style="background: rgba(12,27,68,0.08); color: var(--navy);">
+        <b style="color: var(--orange-deep);">Outcome</b>
+        Pass → save to carousel. Fail → fix at the layer the symptom maps to (see below).
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── HOW AN AGENT USES THIS (simplified) ── -->
+  <div class="agent">
+    <div class="agent-head">
+      <div>
+        <div class="a-eye">How an agent uses this</div>
+        <h2>Four steps · one slot at a time</h2>
+      </div>
+      <div class="a-req">Build slot 09 for SKU "HealSoft Plus — pink"</div>
+    </div>
+    <div class="agent-steps">
+      <div class="a-step">
+        <div class="a-step-num">1</div>
+        <div class="a-step-title">Compose</div>
+        <div class="a-step-layer">L1 + L2</div>
+        <div class="a-step-body">Pull the locked bundle for this one slot — brand truth, slot template, product brief, reference image. Nothing is invented.</div>
+      </div>
+      <div class="a-step">
+        <div class="a-step-num">2</div>
+        <div class="a-step-title">Fill</div>
+        <div class="a-step-layer">L2.5</div>
+        <div class="a-step-body">Claude resolves the placeholders — variant choice, accent hex, headline, claim copy — from the bundle.</div>
+      </div>
+      <div class="a-step">
+        <div class="a-step-num">3</div>
+        <div class="a-step-title">Render</div>
+        <div class="a-step-layer">L3</div>
+        <div class="a-step-body">Filled prompt + reference image go to the image renderer together. Both are required inputs.</div>
+      </div>
+      <div class="a-step">
+        <div class="a-step-num">4</div>
+        <div class="a-step-title">Judge</div>
+        <div class="a-step-layer">L4 · Truth · Alignment · Brand</div>
+        <div class="a-step-body">Three judges review. Pass → save. Fail → trace to the layer and regenerate.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LOWER ROW: Judges + Failure routing ── -->
+  <div class="lower">
+
+    <div class="card">
+      <div class="card-eyebrow">The judges · review every L4 candidate</div>
+      <h2 class="card-title">Three checks, every time</h2>
+      <div class="judge-rows">
+        <div class="judge-row">
+          <div class="judge-mark">✓</div>
+          <div>
+            <strong>Truth</strong>
+            <p>Before/after photos are real · day counts are accurate · press logos are earned.</p>
+          </div>
+        </div>
+        <div class="judge-row">
+          <div class="judge-mark">≡</div>
+          <div>
+            <strong>Alignment</strong>
+            <p>Two-tone header · wave shape · sparkles · product is visible and dominant.</p>
+          </div>
+        </div>
+        <div class="judge-row">
+          <div class="judge-mark">★</div>
+          <div>
+            <strong>Brand</strong>
+            <p>Correct accent palette for the SKU · DFO-dominant · no fabricated claims.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-eyebrow">Failure routing · one symptom, one layer</div>
+      <h2 class="card-title">Where to fix it</h2>
+      <div class="fail-list">
+        <div class="fail-row L1">
+          <div>
+            <strong>Wrong claim</strong>
+            <span class="s">fabricated stat, bad hex, missing trademark</span>
+          </div>
+          <div class="fail-tag">L1</div>
+        </div>
+        <div class="fail-row L2">
+          <div>
+            <strong>Wrong layout</strong>
+            <span class="s">misuses base rule, picks the wrong variant</span>
+          </div>
+          <div class="fail-tag">L2</div>
+        </div>
+        <div class="fail-row L25">
+          <div>
+            <strong>Wrong placeholder</strong>
+            <span class="s">copy doesn't match brief, claim drift</span>
+          </div>
+          <div class="fail-tag">L2.5</div>
+        </div>
+        <div class="fail-row L3">
+          <div>
+            <strong>Wrong render</strong>
+            <span class="s">artifacts, misshapen product, image drift</span>
+          </div>
+          <div class="fail-tag">L3</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="ft">
+    <span><b>Dr. Frederick's Original</b> — Primitives Pipeline · Module 02</span>
+    <span>Wrong output is always a primitives problem, not a generation problem.</span>
+  </footer>
+</div>
+
+</body>
+</html>

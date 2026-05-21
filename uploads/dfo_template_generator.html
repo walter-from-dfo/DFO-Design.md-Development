@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1d396a;--navy-deep:#10426c;--cream:#fef5e3;--gold:#cfb06b;
+  --sky:#a8cae4;--teal:#186972;--near-black:#231f20;--error:#c0392b;
+}
+body{font-family:Georgia,'Times New Roman',serif;background:#e8e0d0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 12px}
+#app{width:100%;max-width:900px;border-radius:14px;overflow:hidden;box-shadow:0 8px 48px rgba(29,57,106,0.22)}
+
+/* HEADER */
+.hdr{background:var(--navy);padding:18px 28px;display:flex;align-items:center;gap:14px}
+.hdr-sparkle{color:var(--gold);font-size:28px;line-height:1;flex-shrink:0}
+.hdr-brand{color:var(--cream);font-size:15px;font-weight:bold;letter-spacing:.1em}
+.hdr-sub{color:var(--gold);font-size:9.5px;letter-spacing:.22em;margin-top:3px}
+
+/* BODY */
+.body{background:var(--cream);padding:28px 32px 36px}
+
+/* INPUT */
+.field-lbl{font-size:10.5px;font-weight:bold;color:var(--navy);letter-spacing:.14em;margin-bottom:8px}
+.url-row{display:flex;gap:10px}
+.url-row input{flex:1;font-size:13px;padding:10px 14px;border-radius:6px;border:2px solid var(--navy);background:#fff;color:var(--near-black);outline:none;font-family:monospace}
+.url-row input:focus{box-shadow:0 0 0 3px rgba(29,57,106,.15)}
+.gen-btn{background:var(--navy);color:var(--gold);border:none;padding:10px 22px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:bold;letter-spacing:.05em;white-space:nowrap;font-family:Georgia,serif;transition:opacity .15s}
+.gen-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* COLOR OVERRIDE STRIP */
+.color-override{margin-top:16px;padding:14px 18px;background:#fff;border-radius:8px;border:1.5px solid #ddd}
+.override-lbl{font-size:10px;font-weight:bold;color:var(--navy);letter-spacing:.14em;margin-bottom:10px}
+.swatches{display:flex;flex-wrap:wrap;gap:8px}
+.swatch-opt{display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:20px;border:2px solid #ccc;cursor:pointer;font-size:12px;color:#444;font-family:Georgia,serif;transition:all .12s;background:#fff}
+.swatch-opt:hover{border-color:var(--navy)}
+.swatch-opt.sel{border-color:var(--navy);background:var(--navy);color:var(--cream)}
+.swatch-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(0,0,0,.15);flex-shrink:0}
+
+/* STATUS */
+.status-ok{margin-top:10px;font-size:13px;font-style:italic;color:var(--teal)}
+.status-err{background:#fdecea;color:var(--error);padding:10px 14px;border-radius:6px;margin-top:12px;font-size:13px}
+
+/* RESULT BANNER */
+.banner{background:var(--navy);border-radius:8px;padding:20px 24px;margin-top:24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.prod-tag{color:var(--gold);font-size:10px;letter-spacing:.18em;margin-bottom:5px}
+.prod-name{color:var(--cream);font-size:19px;font-weight:bold}
+.prod-ben{color:var(--sky);font-size:13px;margin-top:4px;max-width:460px}
+.swatch-wrap{text-align:center;flex-shrink:0}
+.swatch-big{width:58px;height:58px;border-radius:50%;border:3px solid var(--gold);margin:0 auto 6px}
+.swatch-name{color:var(--cream);font-size:12px}
+.swatch-hex{color:var(--sky);font-size:11px;font-family:monospace}
+
+/* TABS */
+.tabs-scroll{display:flex;gap:6px;margin-top:18px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.tabs-scroll::-webkit-scrollbar{display:none}
+.tab-btn{padding:6px 13px;border-radius:5px;font-size:12px;font-weight:bold;cursor:pointer;border:2px solid #ccc;background:#fff;color:#666;white-space:nowrap;font-family:Georgia,serif;transition:all .12s}
+.tab-btn.active{background:var(--navy);color:var(--gold);border-color:var(--navy)}
+
+/* PROMPT CARD */
+.prompt-card{margin-top:14px;border:2px solid var(--navy);border-radius:8px;overflow:hidden}
+.card-hdr{background:var(--navy);padding:11px 18px;display:flex;justify-content:space-between;align-items:center}
+.card-title{color:var(--cream);font-size:14px;font-weight:bold}
+.copy-btn{background:transparent;border:1.5px solid var(--gold);color:var(--gold);padding:5px 14px;border-radius:4px;cursor:pointer;font-size:12px;font-family:Georgia,serif;transition:all .15s}
+.copy-btn.done{background:var(--gold);color:var(--navy)}
+.card-body{background:#fff;padding:18px 20px;font-family:'Courier New',monospace;font-size:12px;line-height:1.75;color:var(--near-black);white-space:pre-wrap;word-break:break-word;max-height:420px;overflow-y:auto}
+.attach-note{background:rgba(29,57,106,.07);border-left:3px solid var(--gold);padding:8px 12px;font-size:12px;color:#555;margin-top:10px;border-radius:0 6px 6px 0}
+.rationale{font-size:12px;color:#555;font-style:italic;margin-top:10px;padding:8px 12px;border-left:3px solid var(--teal);background:#fff;border-radius:0 6px 6px 0}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="hdr">
+    <div class="hdr-sparkle">✦</div>
+    <div>
+      <div class="hdr-brand">DR. FREDERICK'S ORIGINAL</div>
+      <div class="hdr-sub">TEMPLATE AUTO-FILL GENERATOR</div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="field-lbl">PRODUCT PAGE URL</div>
+    <div class="url-row">
+      <input type="text" id="urlInput" placeholder="https://www.amazon.com/dp/... or drfredericks.com/products/..."/>
+      <button class="gen-btn" id="genBtn" onclick="generate()">✦ Generate</button>
+    </div>
+
+    <!-- Color override -->
+    <div class="color-override">
+      <div class="override-lbl">ACCENT COLOR — AUTO-DETECTED OR OVERRIDE</div>
+      <div class="swatches" id="swatchRow">
+        <div class="swatch-opt" onclick="setColor('auto','Auto-Detect','auto')">
+          <div class="swatch-dot" style="background:linear-gradient(135deg,#186972 50%,#2c90ca 50%)"></div>Auto-Detect
+        </div>
+        <div class="swatch-opt" onclick="setColor('#186972','Teal','#10ada8')">
+          <div class="swatch-dot" style="background:#186972"></div>Teal
+        </div>
+        <div class="swatch-opt" onclick="setColor('#2c90ca','Bright Blue','#a8cae4')">
+          <div class="swatch-dot" style="background:#2c90ca"></div>Bright Blue
+        </div>
+        <div class="swatch-opt" onclick="setColor('#e28433','Warm Orange','#f6ab25')">
+          <div class="swatch-dot" style="background:#e28433"></div>Warm Orange
+        </div>
+        <div class="swatch-opt" onclick="setColor('#ac382d','Deep Red','#f6ab25')">
+          <div class="swatch-dot" style="background:#ac382d"></div>Deep Red
+        </div>
+        <div class="swatch-opt" onclick="setColor('#3d5d2b','Forest Green','#719484')">
+          <div class="swatch-dot" style="background:#3d5d2b"></div>Forest Green
+        </div>
+        <div class="swatch-opt" onclick="setColor('#e8748a','Warm Pink','#f4a7b5')">
+          <div class="swatch-dot" style="background:#e8748a"></div>Warm Pink
+        </div>
+      </div>
+    </div>
+
+    <div id="statusLine"></div>
+    <div id="resultsArea"></div>
+  </div>
+</div>
+
+<script>
+const TEMPLATES=[
+  {id:"01",name:"Feature Dominant",short:"Features"},
+  {id:"02",name:"Comparison Chart",short:"Compare"},
+  {id:"03",name:"Use Case A — Lifestyle",short:"Lifestyle"},
+  {id:"04",name:"Product Details",short:"Details"},
+  {id:"05",name:"Use Case B — Feature Callout",short:"Features B"},
+  {id:"06",name:"How It Works / Use",short:"How To"},
+  {id:"07",name:"Sizing Chart",short:"Sizing"},
+  {id:"08",name:"Doctor Developed",short:"Doctor"},
+  {id:"09",name:"Problem & Solution",short:"Problem/Sol"},
+  {id:"10",name:"Social Proof",short:"Social"},
+  {id:"11",name:"Cross Sell",short:"Cross Sell"},
+];
+
+let colorOverride = null; // null = auto-detect
+let sparkleOverride = null;
+let activeTab = "01";
+let resultData = null;
+
+function setColor(hex, name, sparkle) {
+  colorOverride = hex === 'auto' ? null : hex;
+  sparkleOverride = hex === 'auto' ? null : sparkle;
+  document.querySelectorAll('.swatch-opt').forEach(el=>el.classList.remove('sel'));
+  event.currentTarget.classList.add('sel');
+  // Re-render if we already have data
+  if (resultData) {
+    if (colorOverride) {
+      resultData.accent_color = { hex: colorOverride, name: name };
+      resultData.sparkle_support_color = sparkleOverride;
+    }
+    resultData.prompts = buildPrompts(resultData);
+    renderResults();
+  }
+}
+
+const SYSTEM_PROMPT=`You are a DFO (Dr. Frederick's Original) brand analyst. Use web_search to fetch and analyze the product page URL provided, then return ONLY a valid JSON object — no markdown, no code fences, no preamble, just raw JSON starting with { and ending with }.
+
+JSON structure:
+{
+  "product_name": "Full product name",
+  "product_category": "gel heel sock / hydrocolloid bandage / compression glove / etc",
+  "key_benefit": "Primary benefit in 1 sentence",
+  "hero_ingredients": "Key materials or active ingredients",
+  "review_stats": "e.g. 4500+ 5-star reviews",
+  "before_state": "What the customer experiences BEFORE this product",
+  "after_state": "What the customer experiences AFTER using it",
+  "target_customer": "Who this is for",
+  "tagline": "Short punchy benefit phrase",
+  "disclaimer": "Legal disclaimer if needed, else empty string",
+  "doctor_name": "Ben Frederick",
+  "doctor_credentials": "DPM, Podiatric Surgeon",
+  "header_1": "FIRST PART OF HEADER IN CAPS (dark neutral, 2-4 words)",
+  "header_2": "SECOND PART IN CAPS (accent color, 1-3 words)",
+  "sub_regular": "Context subtitle regular weight",
+  "sub_semibold": "Emphasis subtitle semibold",
+  "features": [
+    {"label":"Short feature name","desc":"1-line supporting detail"},
+    {"label":"...","desc":"..."},
+    {"label":"...","desc":"..."}
+  ],
+  "product_zones": [
+    {"zone":"specific product area","label":"Feature name","detail":"What it does"},
+    {"zone":"...","label":"...","detail":"..."},
+    {"zone":"...","label":"...","detail":"..."}
+  ],
+  "steps": [
+    {"instruction":"Action-led step","photo_desc":"describe the in-use photo"},
+    {"instruction":"...","photo_desc":"..."},
+    {"instruction":"...","photo_desc":"..."},
+    {"instruction":"...","photo_desc":"..."}
+  ],
+  "use_cases": ["Scenario 1","Scenario 2","Scenario 3"],
+  "sizes": ["Small/Medium — measurement range","Large/XL — measurement range"],
+  "review_quotes": ["Short review quote 1","Short review quote 2","Short review quote 3"],
+  "media_mentions": ["Media outlet 1","Media outlet 2"],
+  "competitor_label_1": "Generic competitor type — NEVER real brand names — e.g. Regular Bandages",
+  "competitor_label_2": "Generic competitor type 2 — e.g. Other Brands",
+  "competitor_features": ["Feature row 1","Feature row 2","Feature row 3","Feature row 4","Feature row 5","Feature row 6"],
+  "cross_sell_products": ["Related product 1","Related product 2","Related product 3"],
+  "accent_color": {
+    "hex": "#186972",
+    "name": "Teal",
+    "family": "Navy/Teal",
+    "reasoning": "Brief reason for color choice"
+  },
+  "sparkle_support_color": "#10ada8"
+}
+
+ACCENT COLOR SELECTION — pick based on product type:
+- Bandages / wound care / hydrocolloid / blister → hex: "#2c90ca", name: "Bright Blue", sparkle: "#a8cae4"
+- Compression / arch / therapeutic / orthopedic → hex: "#186972", name: "Teal", sparkle: "#10ada8"
+- Gel socks / cream / moisturizer / warm / seasonal → hex: "#e28433", name: "Warm Orange", sparkle: "#f6ab25"
+- Pink / feminine / floral → hex: "#e8748a", name: "Warm Pink", sparkle: "#f4a7b5"
+- Uncertain → default to hex: "#186972" Teal
+
+Return ONLY the raw JSON object. Nothing else.`;
+
+function buildPrompts(v){
+  const ac=v.accent_color?.hex||"#186972";
+  const ssc=v.sparkle_support_color||"#10ada8";
+  const f=v.features||[];
+  const f1=f[0]||{label:"Key Feature 1",desc:"Premium quality"};
+  const f2=f[1]||{label:"Key Feature 2",desc:"Doctor designed"};
+  const f3=f[2]||{label:"Key Feature 3",desc:"All-day comfort"};
+  const zones=v.product_zones||[];
+  const steps=v.steps||[];
+  const uc=v.use_cases||["At the Office","On a Walk","At Home"];
+  const sizes=v.sizes||["Small/Medium","Large/XL"];
+  const reviews=v.review_quotes||[];
+  const media=v.media_mentions||[];
+  const cross=v.cross_sell_products||[];
+  const compF=v.competitor_features||["Stays in Place","Waterproof","Pain-Free Removal","Absorbs Moisture","Premium Materials","Doctor Designed"];
+  const h1=v.header_1||"DESIGNED";
+  const h2=v.header_2||"FOR YOU";
+  const subR=v.sub_regular||v.key_benefit||"Premium quality for everyday relief";
+  const subS=v.sub_semibold||v.hero_ingredients||"Physician-designed for lasting comfort";
+  const pn=v.product_name||"Product";
+
+  return{
+"01":`▸ ATTACH: 01_Feature_Dominant.png + product cutout photo
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+LAYOUT: Two vertical zones.
+Left: Header top-left + 3 stacked benefit callouts beneath.
+Right: Large product image with drop shadow.
+
+HEADER (Neuzeit Grotesk ExtCond Black, 194pt):
+"${h1}" in deep navy #1d396a
+"${h2}" in ${ac}
+Two-tone split at natural emphasis point. No exceptions.
+
+BENEFIT CALLOUTS (Poppins SemiBold 52pt label + Medium 42pt desc):
+1. ${f1.label} — ${f1.desc}
+2. ${f2.label} — ${f2.desc}
+3. ${f3.label} — ${f3.desc}
+${v.disclaimer?`Fine print: "${v.disclaimer}" — Poppins Medium 24pt`:""}
+
+PRODUCT IMAGE: Large, centered, clean cutout. Drop shadow essential.
+
+DESIGN ELEMENTS:
+• Wave shape (${ac} or sky blue #a8cae4) along top/bottom of left zone
+• 3-Sparkle cluster (2-color: primary ${ac}, support ${ssc}) near product
+
+BACKGROUND: Warm cream #fef5e3 | ACCENT: ${ac}
+Brand palette: Navy #1d396a / Cream #fef5e3 / Gold #cfb06b / Sky #a8cae4
+STYLE: Premium, clean, product-dominant. Product takes 50%+ of canvas.`,
+
+"02":`▸ ATTACH: 02_Comparison_Chart.png + product photo
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+LAYOUT: Top header zone + 3-column comparison table.
+Col 1 = Dr. Frederick's Original (${pn}) — DOMINANT
+Col 2 = "${v.competitor_label_1||"Regular Bandages"}"
+Col 3 = "${v.competitor_label_2||"Other Brands"}"
+
+HEADER (Neuzeit Grotesk ExtCond Black, 194pt):
+"${h1}" in near-black #231f20
+"${h2}" in ${ac}. Two-tone.
+3-Sparkle cluster near header — upper right or above brand column.
+
+COMPARISON TABLE (6 rows):
+${compF.slice(0,6).map((feat,i)=>`Row ${i+1}: "${feat}" — DFO: ✓ — Col 2: ✗ — Col 3: ✗`).join('\n')}
+
+COLUMN STYLING:
+• DFO column: ${ac} fill, cream #fef5e3 text. Wider + taller than competitors.
+• Competitor columns: light gray near-white. Visually recede.
+• Checkmarks: white icon inside filled ${ac} circle
+• X marks: mid-gray outline circle
+
+DISCLAIMER (always present): "${v.disclaimer||"*Based on internal testing vs. traditional alternatives. Results may vary."}"
+BACKGROUND: Cream #fef5e3 | ACCENT: ${ac}
+STYLE: DFO column wins visually before anyone reads a row.`,
+
+"03":`▸ ATTACH: 03_Use_Case_1.png + lifestyle photos for each scenario
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+LAYOUT: Header zone top. Below: ${uc.length} lifestyle panels.
+
+HEADER (Neuzeit Grotesk ExtCond Black, 140pt):
+"${h1}" in deep navy #1d396a
+"${h2}" in ${ac}. Two-tone.
+Sub — Poppins Medium 56pt: "${subR}"
+
+LIFESTYLE PANELS (show product in each context):
+${uc.map((u,i)=>`Panel ${i+1}: "${u}" — lifestyle photo of someone using ${pn} in this context. Product clearly visible.`).join('\n')}
+
+DESIGN ELEMENTS:
+• Wave shape (sky blue #a8cae4 or ${ac} tint) in header zone
+• ⚠️ TEMPLATE 03 ONLY: 3-COLOR sparkle permitted (three different accent tones)
+• Directional arrows between/within panels in ${ac}
+• Each panel: scenario label Poppins SemiBold
+
+BACKGROUND: Warm cream #fef5e3 | ACCENT: ${ac}
+STYLE: Lifestyle-led. Customer sees themselves in the scenario before reading specs.`,
+
+"04":`▸ ATTACH: 04_Product_Details.png + product photo (multiple angles preferred)
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+LAYOUT: Header + sub top. Hero product image dominant center/right.
+Annotated callouts with leader lines pointing to specific product zones.
+
+HEADER (Neuzeit Grotesk ExtCond Black, 212pt):
+"${h1}" in deep navy #1d396a + "${h2}" in ${ac}. Two-tone.
+
+Sub pair:
+  Poppins Regular 64pt — "${subR}"
+  Poppins SemiBold 64pt — "${subS}"
+
+PRODUCT ZONE CALLOUTS (leader lines in ${ac}):
+${zones.length>0
+  ?zones.slice(0,5).map((z,i)=>`Callout ${i+1}: → ${z.zone}\n  Label: "${z.label}"\n  Detail: "${z.detail}"`).join('\n')
+  :[f1,f2,f3].map((f,i)=>`Callout ${i+1}: → product zone ${i+1}\n  Label: "${f.label}"\n  Detail: "${f.desc}"`).join('\n')}
+
+DESIGN ELEMENTS:
+• Wave shape (sky blue #a8cae4 or light ${ac}) as background band
+• 3-Sparkle cluster (primary ${ac}, support ${ssc}) near header or product
+• Tab/flag element labeling product line or SKU variant
+
+BACKGROUND: Cream #fef5e3 | ACCENT: ${ac}
+STYLE: Technical + brand-beautiful. Callouts give evidence, not just claims.`,
+
+"05":`▸ ATTACH: 05_Use_Case_2.png + in-use product photo
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+LAYOUT: Two zones: left/center = hero product in-use. Right = pop-out circle + icon badges.
+
+HEADER (Neuzeit Grotesk ExtCond Black, 140–142pt):
+Two-phrase format (problem → solution):
+"${h1}," in near-black #231f20
+"${h2}" in ${ac}. Two-tone.
+Sub — Poppins Medium 56pt: "${subR}"
+
+HERO PRODUCT IMAGE: In-use on body. Not a studio cutout — show texture and construction.
+
+POP-OUT CIRCLE DETAIL:
+• Circular crop of most compelling material zone (grip texture, gel lining, compression weave, etc.)
+• Thick ${ac} outline — must read at thumbnail size
+• Arrow pointing from product to circle — EXACT same color ${ac}
+• Content: the detail that proves quality
+
+ICON BADGES (right side, vertical stack — 4–5 badges):
+Each badge = white icon on complementary-color background + Poppins SemiBold 50pt label
+${f.slice(0,5).map((feat,i)=>`Badge ${i+1}: "${feat.label}" — icon: relevant line icon for this benefit`).join('\n')}
+
+DESIGN ELEMENTS:
+• Wave shape at bottom of product zone in ${ac}
+• Tab/flag element near product top
+• Arrow and circle outline must be EXACT SAME COLOR: ${ac}
+
+BACKGROUND: White or very light tint | ACCENT: ${ac}
+STYLE: "Prove it" image. Specific, detail-rewarding.`,
+
+"06":`▸ ATTACH: 06_How_It_Works_or_How_To_Use.png + in-use step photos
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+VARIANT: How To Use | GRID: ${steps.length<=2?"Numbered circles":"2×2 four-panel grid"}
+
+HEADER (Neuzeit Grotesk ExtCond Black, 180–200pt):
+"HOW TO" in cream #fef5e3 (dark background)
+"USE" in ${ac}. Two-tone.
+Sub pair:
+  Poppins Regular 64pt — "Simple ${steps.length||4}-step application"
+  Poppins SemiBold 64pt — "${subR}"
+
+STEP PANELS (step numbers Poppins SemiBold 120pt — DOMINANT in each panel):
+${steps.length>0
+  ?steps.slice(0,4).map((s,i)=>`Step ${i+1}:\n  Photo: ${s.photo_desc}\n  Instruction: "${s.instruction}"`).join('\n')
+  :`Step 1:\n  Photo: unboxing / taking product from packaging\n  Instruction: "Remove from packaging and unfold."\nStep 2:\n  Photo: applying to the body part\n  Instruction: "Apply to the affected area."\nStep 3:\n  Photo: product secured and worn correctly\n  Instruction: "Secure and adjust to your comfort."\nStep 4:\n  Photo: person active and smiling\n  Instruction: "Go about your day fully relieved."`}
+
+Panel backgrounds: subtle tint variation (10–20% lightness shift of ${ac}) — NOT identical fills.
+Connecting arrows between panels: ${ac} — NON-NEGOTIABLE, same hex as header accent.
+Footer: "Dr. Frederick's Original — Instructions Included!" (Poppins SemiBold 50pt)
+
+DESIGN ELEMENTS:
+• Wave shape at top of header zone
+• Gentle curve shape at bottom of step grid
+
+BACKGROUND: Dark navy #1d396a (premium variant) | ACCENT: ${ac}`,
+
+"07":`▸ ATTACH: 07_Sizing_Chart.png + measurement reference photo (body part + measuring tape)
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+LAYOUT: Header + 3-Sparkle top. Measurement table center. In-use measurement photo beside table.
+
+HEADER (Neuzeit Grotesk ExtCond Black, 200pt — max 2–3 words):
+"FIND YOUR" in deep navy #1d396a
+"PERFECT FIT" in ${ac}. Two-tone.
+Sub pair:
+  Poppins Medium 67pt — "Measure to find your size on the chart below."
+  Poppins SemiBold 67pt — "${subS}"
+
+3-SPARKLE (primary ${ac}, support ${ssc}) — PROMINENT upper right or beside header.
+Sparkle support color ${ssc} should echo the product's physical material color.
+
+SIZING TABLE:
+${sizes.map((s,i)=>`Row ${i+1}: ${s}`).join('\n')}
+• Highlighted row (most common): Row ${Math.ceil(sizes.length/2)} — fill in ${ac}
+• Other rows: very light individual tints — each slightly different lightness. Never identical.
+• No heavy borders — tonal variation provides readability.
+• Measurement font: Poppins Medium 52pt. Do NOT colorize.
+
+MEASUREMENT PHOTO: Tight crop, body part + measuring tape. Show exactly how to measure.
+Leader lines: Poppins Medium 52pt. Clinical but clean.
+
+FEATURES (alternating weights — creates reading rhythm):
+Poppins SemiBold 50pt: "${f1.label}"
+Poppins Regular 46pt: "${f1.desc}"
+Poppins SemiBold 50pt: "${f2.label}"
+Poppins Regular 46pt: "${f2.desc}"
+
+CARE BADGES: White icon on complementary-color background.
+Suggested: Hand wash icon / Air dry icon
+
+BACKGROUND: White or very light — grid must breathe | ACCENT: ${ac}`,
+
+"08":`▸ ATTACH: 08_Doctor_Developed.png + professional doctor portrait photo (lab coat, confident pose)
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+LAYOUT: Two columns. Left: header + body copy + authority signature. Right: doctor portrait.
+
+HEADER (Neuzeit Grotesk ExtCond Black, 200pt — max 2–4 words):
+"DOCTOR" in cream #fef5e3 (dark background)
+"DEVELOPED" in ${ac}. Two-tone.
+
+BODY COPY (Poppins SemiBold 50pt — 3–5 sentences, doctor's voice, NOT a feature list):
+Line 1: "${v.key_benefit||subR}"
+Line 2: "With ${pn}, physician-designed for patients who refuse to stop doing what they love."
+Line 3: "Trusted by thousands — because it works."
+
+AUTHORITY SIGNATURE BLOCK (bottom of left column):
+Script signature: "— ${v.doctor_name||"Dr. Frederick"}" — handwritten cursive style, casual professional (Sharpie feel, NOT calligraphy)
+Printed beneath: "${v.doctor_name||"Ben Frederick"}, ${v.doctor_credentials||"DPM"}" — Poppins SemiBold
+
+DOCTOR PORTRAIT (entire right column):
+Professional. Warm, confident pose. White lab coat. Large — half canvas height+.
+MUST feel like a real specific doctor, not stock photography.
+
+SPARKLE: 1–2 sparkles only (NOT full 3-cluster) near header — approximately 1 o'clock position.
+
+BACKGROUND: Dark navy #1d396a | ACCENT: ${ac}
+STYLE: Warm and credible. A physician who genuinely cares. Not a medical disclaimer.`,
+
+"09":`▸ ATTACH: 09_Problem_and_Solution.png + real before/after customer photos
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+VARIANT: Before / After Transformation
+
+HEADER (Neuzeit Grotesk ExtCond Black — dominant, scaled to width):
+"${h1}" in near-black #231f20
+"${h2}" in ${ac}. Two-tone. Accent word carries emotional punch.
+
+BEFORE PANEL:
+Condition: "${v.before_state||"Pain, discomfort, and frustration with existing solutions"}"
+→ Real, honest condition photo. NOT retouched or theatrical.
+→ Slightly desaturated — heavier visual weight than after.
+→ Same crop/angle as after panel.
+Label: "Before" — Poppins SemiBold
+
+AFTER PANEL:
+Result: "${v.after_state||"Relief, comfort, and renewed confidence"}"
+→ Warm clear lighting. Dramatically improved. Same body zone.
+→ Same crop/composition as before.
+Label: "After" — Poppins SemiBold
+
+Timeline badge (${ac} pill, top-right of panel pair): "Results in [X] Days" — Poppins SemiBold white
+
+DISCLAIMER: "*Actual Customer Photos" — Poppins Medium, small, beneath panels. REQUIRED.
+FOOTER: "${v.tagline||"Live Every Step Fully™"} — Instructions Included!"
+
+DESIGN ELEMENTS: Wave shape as content zone separator.
+BACKGROUND: Cream #fef5e3 | ACCENT: ${ac}
+Before = desaturated / heavier. After = warm / bright. Same crop. Timeline badge essential.`,
+
+"10":`▸ ATTACH: 10_Social_Proof.png + lifestyle/customer photos
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+LAYOUT: Top → header color block. Middle → "As Seen On" logo bar on white. Bottom → product image.
+
+HEADER COLOR BLOCK (top, fills full width):
+Fill: deep navy #1d396a (most authoritative)
+Header (Neuzeit Grotesk ExtCond Black):
+"CRITICS GIVE IT" in cream #fef5e3 (setup phrase)
+"TWO TOES UP" in ${ac} (punchline — adapt wordplay to this product category)
+
+⚠️ SPARKLE: Only 1–2 sparkles (NOT the full 3-cluster). Placed beside header end — visual exclamation point.
+
+"AS SEEN ON" LOGO BAR (middle zone, white/light background):
+"As Seen On:" label — Poppins SemiBold, small, above logo row
+Media logos — original brand colors or grayscale. NEVER recolor to product palette.
+${media.length>0
+  ?media.map((m,i)=>`Logo ${i+1}: ${m}`).join('\n')
+  :"Logo 1: [Media outlet 1]\nLogo 2: [Media outlet 2]\nLogo 3: [Media outlet 3]"}
+⚠️ Only use logos for ACTUAL earned press coverage.
+
+SOCIAL PROOF ELEMENTS:
+• Review stat: "${v.review_stats||"4,500+ 5-Star Reviews"}" — stars in gold #cfb06b
+• Quote snippets:
+  "${reviews[0]||"Life-changing product — I wear it every day."}"
+  "${reviews[1]||"Works exactly as described. No more pain."}"
+
+PRODUCT IMAGE (bottom zone): Large, clean cutout OR tight lifestyle crop.
+
+BACKGROUND: White/cream middle zone | ACCENT: ${ac}
+STYLE: Editorial, light-hearted, earned. Brand has personality by this point in carousel.`,
+
+"11":`▸ ATTACH: 11_Cross_Sell.png + photos of all products shown
+
+Create a premium DTC carousel image for ${pn} by Dr. Frederick's Original.
+Canvas: 2000 × 2000 px | Mobile-first | Amazon product carousel
+
+VARIANT: Product Family Cross-Sell
+
+HEADER (Neuzeit Grotesk ExtCond Black — scaled to width):
+"COMPLETE YOUR" in deep navy #1d396a
+"COLLECTION" in ${ac}. Two-tone.
+Sub — Poppins Medium: "Explore the full Dr. Frederick's Original family."
+
+PRODUCTS DISPLAYED (3–5, equal visual weight — this is NOT a hero layout):
+1. ${pn} — CURRENT PRODUCT — clean cutout photo
+${cross.slice(0,4).map((p,i)=>`${i+2}. ${p} — clean cutout photo + Poppins SemiBold label beneath`).join('\n')||
+`2. Dr. Frederick's Foot Cream — clean product cutout
+3. Dr. Frederick's Arch Support Sleeves — clean product cutout
+4. Dr. Frederick's Compression Gloves — clean product cutout`}
+
+Each product: equal size, clean cutout, clear Poppins SemiBold label. No single product dominates.
+Maximum 5 products. Beyond 5 = catalog page, not carousel image.
+
+FAMILY FOOTER: "Available in Multiple Styles & Sizes." — Poppins Medium
+
+DESIGN ELEMENTS:
+• Wave/gentle curve between header zone and product display zone
+• DFO logo mark at footer position
+• 3-Sparkle (primary ${ac}, support ${ssc}) near header
+
+BACKGROUND: Neutral white or light cream — lets the product array breathe | ACCENT: ${ac}
+STYLE: Curated ecosystem with a point of view — not a catalog.`
+  };
+}
+
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+async function generate(){
+  const url=document.getElementById('urlInput').value.trim();
+  if(!url){document.getElementById('statusLine').innerHTML='<div class="status-err">⚠ Please enter a product URL.</div>';return;}
+  const btn=document.getElementById('genBtn');
+  const sl=document.getElementById('statusLine');
+  const ra=document.getElementById('resultsArea');
+  btn.disabled=true;btn.textContent='Analyzing...';
+  ra.innerHTML='';
+  const steps=["Fetching product page...","Analyzing product data...","Selecting accent color...","Building 11 templates...","Almost done..."];
+  let si=0;
+  const iv=setInterval(()=>{sl.innerHTML=`<div class="status-ok">⟳ ${steps[Math.min(si++,steps.length-1)]}</div>`;},2200);
+
+  try{
+    const messages=[{role:"user",content:`Analyze this product page and extract all data as JSON: ${url}`}];
+    let finalData=null;
+
+    for(let i=0;i<8;i++){
+      const res=await fetch("https://api.anthropic.com/v1/messages",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          model:"claude-sonnet-4-20250514",
+          max_tokens:3500,
+          system:SYSTEM_PROMPT,
+          tools:[{type:"web_search_20250305",name:"web_search"}],
+          messages
+        })
+      }).then(r=>r.json());
+
+      if(res.error)throw new Error(res.error.message||"API error");
+      const textBlocks=(res.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");
+
+      if(res.stop_reason==="end_turn"||!res.stop_reason){
+        const clean=textBlocks.replace(/```json\n?|```\n?/g,"").trim();
+        const s=clean.indexOf('{'),e=clean.lastIndexOf('}');
+        if(s!==-1&&e!==-1)finalData=JSON.parse(clean.slice(s,e+1));
+        break;
+      }
+      if(res.stop_reason==="tool_use"){
+        messages.push({role:"assistant",content:res.content});
+        const tr=(res.content||[]).filter(b=>b.type==="tool_use").map(b=>({type:"tool_result",tool_use_id:b.id,content:"Search completed — please now return the JSON."}));
+        if(tr.length)messages.push({role:"user",content:tr});
+        else{if(textBlocks){const clean=textBlocks.replace(/```json\n?|```\n?/g,"").trim();const s=clean.indexOf('{'),e=clean.lastIndexOf('}');if(s!==-1&&e!==-1)finalData=JSON.parse(clean.slice(s,e+1));}break;}
+      }else{
+        if(textBlocks){const clean=textBlocks.replace(/```json\n?|```\n?/g,"").trim();const s=clean.indexOf('{'),e=clean.lastIndexOf('}');if(s!==-1&&e!==-1)finalData=JSON.parse(clean.slice(s,e+1));}
+        break;
+      }
+    }
+
+    if(!finalData)throw new Error("Could not extract product data. Try a different URL or check if the page is accessible.");
+
+    // Apply color override if set
+    if(colorOverride){
+      finalData.accent_color={hex:colorOverride,name:document.querySelector('.swatch-opt.sel')?.textContent?.trim()||"Custom"};
+      finalData.sparkle_support_color=sparkleOverride||"#10ada8";
+    }
+
+    finalData.prompts=buildPrompts(finalData);
+    resultData=finalData;
+    activeTab="01";
+    sl.innerHTML='';
+    renderResults();
+  }catch(e){
+    sl.innerHTML=`<div class="status-err">⚠ ${esc(e.message)}</div>`;
+  }finally{
+    clearInterval(iv);btn.disabled=false;btn.textContent='✦ Generate';
+  }
+}
+
+function renderResults(){
+  const v=resultData;
+  const ac=v.accent_color?.hex||"#186972";
+  const rationale=v.accent_color?.reasoning||"";
+  document.getElementById('resultsArea').innerHTML=`
+    <div class="banner">
+      <div>
+        <div class="prod-tag">PRODUCT IDENTIFIED</div>
+        <div class="prod-name">${esc(v.product_name||"Product")}</div>
+        <div class="prod-ben">${esc(v.key_benefit||"")}</div>
+      </div>
+      <div class="swatch-wrap">
+        <div class="swatch-big" style="background:${esc(ac)}"></div>
+        <div class="swatch-name">${esc(v.accent_color?.name||"Accent")}</div>
+        <div class="swatch-hex">${esc(ac)}</div>
+      </div>
+    </div>
+    ${rationale?`<div class="rationale">Color rationale: ${esc(rationale)}</div>`:""}
+    <div class="tabs-scroll" id="tabRow">
+      ${TEMPLATES.map(t=>`<button class="tab-btn${t.id===activeTab?" active":""}" onclick="switchTab('${t.id}')">${t.short}</button>`).join('')}
+    </div>
+    <div id="promptArea"></div>
+  `;
+  renderPrompt();
+}
+
+function switchTab(id){
+  activeTab=id;
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent===TEMPLATES.find(t=>t.id===id)?.short);
+  });
+  renderPrompt();
+}
+
+function renderPrompt(){
+  const t=TEMPLATES.find(t=>t.id===activeTab);
+  const prompt=resultData?.prompts?.[activeTab]||"";
+  document.getElementById('promptArea').innerHTML=`
+    <div class="prompt-card">
+      <div class="card-hdr">
+        <div class="card-title">Template ${t.id} — ${t.name}</div>
+        <button class="copy-btn" id="cpyBtn" onclick="copyPrompt()">Copy Prompt</button>
+      </div>
+      <div class="card-body">${esc(prompt)}</div>
+    </div>
+    <div class="attach-note">✦ Before generating: attach <strong>0${t.id}_${t.name.replace(/[^a-zA-Z]/g,'_')}.png</strong> (reference image) + your product photo to the image gen prompt above.</div>
+  `;
+}
+
+function copyPrompt(){
+  const prompt=resultData?.prompts?.[activeTab]||"";
+  navigator.clipboard.writeText(prompt).then(()=>{
+    const btn=document.getElementById('cpyBtn');
+    btn.textContent='Copied ✓';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy Prompt';btn.classList.remove('done');},2000);
+  });
+}
+
+document.getElementById('urlInput').addEventListener('keydown',e=>{if(e.key==='Enter')generate();});
+// Mark auto-detect as selected by default
+document.querySelector('.swatch-opt').classList.add('sel');
+</script>
+</body>
+</html>
