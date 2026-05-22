@@ -970,6 +970,374 @@ nav.topnav {
 .af-trace-row.l25 .af-trace-target { background: var(--dfo-amber); }
 .af-trace-row.l3 .af-trace-target { background: var(--dfo-sky); }
 
+/* ── Slim judges variant (Section 02) ──────────────────────── */
+.judges-mini--slim .judges-mini-row {
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+.judges-mini--slim .jr-label {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--dfo-navy);
+}
+.judges-mini--slim .jr-mark {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* ── Section 2.5 — Agent walkthrough flowchart ─────────────── */
+.section-num--decimal { font-size: clamp(64px, 7vw, 100px); }
+.section-num--decimal::after { margin-top: 8px; }
+
+.af2-request {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-1);
+  flex-wrap: wrap;
+}
+.af2-request-label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dfo-stone-400);
+}
+.af2-request-text {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 13.5px;
+  color: var(--dfo-navy);
+  font-weight: 600;
+}
+.af2-request-text::before {
+  content: "▸ ";
+  color: var(--section-accent, var(--dfo-orange-600));
+}
+
+.af2-chain {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.af2-node {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 24px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 26px 30px;
+  box-shadow: var(--shadow-1);
+}
+@media (max-width: 760px) {
+  .af2-node { grid-template-columns: 1fr; gap: 18px; padding: 22px 22px 24px; }
+}
+.af2-node--judge { border-color: color-mix(in oklab, var(--section-accent, var(--dfo-orange-600)) 40%, transparent); }
+
+.af2-node-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 2px;
+}
+@media (max-width: 760px) {
+  .af2-node-side { flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; }
+}
+.af2-node-num {
+  width: 64px; height: 64px;
+  background: var(--section-accent, var(--dfo-orange-600));
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 900;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--section-accent, var(--dfo-orange-600)) 35%, transparent);
+}
+.af2-node-layer {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--section-accent, var(--dfo-orange-600));
+  background: color-mix(in oklab, var(--section-accent, var(--dfo-orange-600)) 12%, #fff);
+  padding: 5px 10px;
+  border-radius: 999px;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid color-mix(in oklab, var(--section-accent, var(--dfo-orange-600)) 30%, transparent);
+}
+
+.af2-node-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--dfo-navy);
+  margin-bottom: 10px;
+}
+.af2-node-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--dfo-ink-700);
+  margin-bottom: 18px;
+}
+.af2-node-desc code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  background: var(--dfo-sky-50);
+  color: var(--dfo-navy);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.af2-io {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  background: var(--dfo-paper);
+  border-radius: 14px;
+  padding: 14px;
+}
+@media (max-width: 720px) {
+  .af2-io { grid-template-columns: 1fr; }
+  .af2-io-arrow { transform: rotate(90deg); justify-self: center; }
+}
+.af2-io-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.af2-io-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--dfo-ink-700);
+}
+.af2-io-card strong {
+  display: block;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--dfo-navy);
+  margin-bottom: 1px;
+  font-weight: 900;
+}
+.af2-io-card code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  background: var(--dfo-sky-50);
+  color: var(--dfo-navy);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+.af2-io-tag {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  background: var(--dfo-navy);
+  color: #fff;
+  padding: 4px 7px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  min-width: 30px;
+  text-align: center;
+  line-height: 1;
+}
+.af2-io-tag.l1 { background: var(--dfo-navy); }
+.af2-io-tag.l2 { background: var(--dfo-navy-600); }
+.af2-io-tag.br { background: var(--dfo-amber); }
+.af2-io-tag.ref { background: var(--dfo-sky); }
+.af2-io-tag.fill { background: var(--section-accent, var(--dfo-orange-600)); }
+.af2-io-arrow {
+  color: var(--section-accent, var(--dfo-orange-600));
+  display: flex; align-items: center; justify-content: center;
+}
+.af2-io-out {
+  background: var(--section-accent, var(--dfo-orange-600));
+  color: #fff;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 15px;
+  line-height: 1.05;
+  letter-spacing: 0;
+  padding: 16px 20px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 130px;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--section-accent, var(--dfo-orange-600)) 30%, transparent);
+}
+
+.af2-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0 6px;
+  gap: 6px;
+}
+.af2-connector-line {
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--section-accent, var(--dfo-orange-600)) 25%, transparent), var(--section-accent, var(--dfo-orange-600)));
+  position: relative;
+}
+.af2-connector-line::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--section-accent, var(--dfo-orange-600));
+}
+.af2-connector-text {
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--dfo-stone-400);
+  text-align: center;
+}
+
+.af2-branch {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.af2-branch-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--dfo-ink-700);
+}
+.af2-branch-row.pass { background: #EAF7EE; border-color: #C5E5CF; }
+.af2-branch-row.fail { background: #FCEDEC; border-color: #F1D2CE; }
+.af2-pill {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.af2-branch-row.pass .af2-pill { background: #1E6B3D; color: #fff; }
+.af2-branch-row.fail .af2-pill { background: var(--dfo-red); color: #fff; }
+.af2-branch-text strong { color: var(--dfo-navy); font-weight: 600; }
+
+.af2-trace {
+  margin-top: 28px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 28px 26px;
+  box-shadow: var(--shadow-1);
+}
+.af2-trace-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.af2-trace-icon {
+  width: 36px; height: 36px;
+  background: rgba(172, 56, 46, 0.12);
+  color: var(--dfo-red);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.af2-trace-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--dfo-navy);
+  margin-bottom: 4px;
+}
+.af2-trace-head p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dfo-ink-700);
+}
+.af2-trace-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (max-width: 600px) { .af2-trace-grid { grid-template-columns: 1fr; } }
+.af2-trace-grid .af2-trace-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--dfo-paper);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.af2-trace-grid .af2-trace-symptom {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--dfo-ink-700);
+  flex-grow: 1;
+}
+.af2-trace-grid .af2-trace-symptom strong {
+  display: block;
+  color: var(--dfo-navy);
+  font-weight: 600;
+  margin-bottom: 2px;
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12.5px;
+}
+.af2-trace-grid .af2-trace-target {
+  font-family: var(--font-display);
+  font-size: 14px;
+  background: var(--dfo-navy);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  min-width: 44px;
+  text-align: center;
+  line-height: 1;
+}
+.af2-trace-row.l1 .af2-trace-target { background: var(--dfo-navy); }
+.af2-trace-row.l2 .af2-trace-target { background: var(--dfo-navy-600); }
+.af2-trace-row.l25 .af2-trace-target { background: var(--dfo-amber); }
+.af2-trace-row.l3 .af2-trace-target { background: var(--dfo-sky); }
+
 /* ── Layer cards (the big L0–L4 detail blocks) ─────────────── */
 .layer-card {
   border-radius: 22px;
@@ -2196,6 +2564,7 @@ footer .footer-meta strong { color: #fff; }
     <div class="nav-links">
       <a href="#overview">Overview</a>
       <a href="#infographic">Framework</a>
+      <a href="#agent-walkthrough">Walkthrough</a>
       <a href="#layers">Layers</a>
       <a href="#pyramids">Pyramids</a>
       <a href="#templates">Templates</a>
@@ -2293,29 +2662,62 @@ footer .footer-meta strong { color: #fff; }
     <div class="pipeline-title">Dr. Frederick's Original — Primitives Pipeline</div>
     <div class="pipeline-sub">How the design system maps to BP Trading Co.'s layered AI workflow</div>
 
-    <div class="judges-mini">
+    <div class="judges-mini judges-mini--slim">
       <div class="judges-mini-title">⚖ The Judges<small>review every L4 candidate</small></div>
       <div class="judges-mini-rows">
         <div class="judges-mini-row">
           <div class="jr-mark">✓</div>
-          <div class="jr-content"><strong>Truth</strong>Before/after real · day counts accurate · press logos earned</div>
+          <span class="jr-label">Truth</span>
         </div>
         <div class="judges-mini-row">
           <div class="jr-mark">≡</div>
-          <div class="jr-content"><strong>Alignment</strong>Two-tone header · wave shape · sparkle · product visible</div>
+          <span class="jr-label">Alignment</span>
         </div>
         <div class="judges-mini-row">
           <div class="jr-mark">★</div>
-          <div class="jr-content"><strong>Brand</strong>Correct accent palette · DFO dominant · no fabricated claims</div>
+          <span class="jr-label">Brand</span>
         </div>
       </div>
       <div class="judges-mini-pass">pass → save to carousel</div>
     </div>
 
     <div class="stack">
-      <div class="stack-layer sl-l4">
-        <div class="sl-tag">L4 · Generated Assets</div>
-        <div class="sl-title">Finished carousel images</div>
+      <div class="stack-layer sl-l0">
+        <div class="sl-tag">L0 · Evidence</div>
+        <div class="sl-title">Raw source materials from the product team</div>
+        <div class="sl-files">
+          <span>Color_Palette.svg</span>
+          <span>Logo.svg</span>
+          <span>Shapes.svg</span>
+          <span>Sparkles_1–11.png</span>
+          <span>Product photos</span>
+          <span>Brand fonts (.ttf)</span>
+        </div>
+        <div class="sl-note">Reference carousel images · before/after photography · doctor portrait.</div>
+      </div>
+      <div class="sl-arrow">
+        <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        raw source materials curated into L1
+      </div>
+
+      <div class="stack-layer sl-l1">
+        <div class="sl-tag">L1 · Primitives</div>
+        <div class="sl-title">Immutable brand truth — facts, not interpretations</div>
+        <div class="sl-files">
+          <span>global-rules.md</span>
+          <span>color-system.md</span>
+          <span>reusable-elements.md</span>
+        </div>
+        <div class="sl-note">Typography stack · two-tone header rule · sparkle system · wave shapes · all accent hex values per SKU family.</div>
+      </div>
+      <div class="sl-arrow">
+        <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        brand truth + immutable rules consumed by L2
+      </div>
+
+      <div class="stack-layer sl-l2">
+        <div class="sl-tag">L2 · Locked Judgment</div>
+        <div class="sl-title">11 template .md files — one decision per slot</div>
         <div class="sl-files">
           <span>01 · Feature Dominant</span>
           <span>02 · Comparison Chart</span>
@@ -2329,25 +2731,11 @@ footer .footer-meta strong { color: #fff; }
           <span>10 · Social Proof</span>
           <span>11 · Cross Sell</span>
         </div>
+        <div class="sl-note">Each file locks: which layout variant to use, what each element must do, what "correct" looks like for review.</div>
       </div>
       <div class="sl-arrow">
         <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        revise if judges reject · regenerate as primitives evolve
-      </div>
-
-      <div class="stack-layer sl-l3">
-        <div class="sl-tag">L3 · Production</div>
-        <div class="sl-title">Four modalities render assets</div>
-        <div class="sl-files">
-          <span>DFO_Prompt_Templates.md</span>
-          <span>Claude (judgment)</span>
-          <span>GPT Image 2 / Nano Banana</span>
-          <span>Human designer</span>
-        </div>
-      </div>
-      <div class="sl-arrow">
-        <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        completed prompt + reference image handed to L3 renderer
+        positionings (base + named template variant) consumed by L2.5
       </div>
 
       <div class="stack-layer sl-assembly">
@@ -2392,12 +2780,27 @@ footer .footer-meta strong { color: #fff; }
       </div>
       <div class="sl-arrow">
         <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        positionings (base + named template variant) consumed by L2.5
+        completed prompt + reference image handed to L3 renderer
       </div>
 
-      <div class="stack-layer sl-l2">
-        <div class="sl-tag">L2 · Locked Judgment</div>
-        <div class="sl-title">11 template .md files — one decision per slot</div>
+      <div class="stack-layer sl-l3">
+        <div class="sl-tag">L3 · Production</div>
+        <div class="sl-title">Four modalities render assets</div>
+        <div class="sl-files">
+          <span>DFO_Prompt_Templates.md</span>
+          <span>Claude (judgment)</span>
+          <span>GPT Image 2 / Nano Banana</span>
+          <span>Human designer</span>
+        </div>
+      </div>
+      <div class="sl-arrow">
+        <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        rendered candidate sent to the Judges · revise if rejected
+      </div>
+
+      <div class="stack-layer sl-l4">
+        <div class="sl-tag">L4 · Generated Assets</div>
+        <div class="sl-title">Finished carousel images</div>
         <div class="sl-files">
           <span>01 · Feature Dominant</span>
           <span>02 · Comparison Chart</span>
@@ -2411,115 +2814,154 @@ footer .footer-meta strong { color: #fff; }
           <span>10 · Social Proof</span>
           <span>11 · Cross Sell</span>
         </div>
-        <div class="sl-note">Each file locks: which layout variant to use, what each element must do, what "correct" looks like for review.</div>
-      </div>
-      <div class="sl-arrow">
-        <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        brand truth + immutable rules consumed by L2
-      </div>
-
-      <div class="stack-layer sl-l1">
-        <div class="sl-tag">L1 · Primitives</div>
-        <div class="sl-title">Immutable brand truth — facts, not interpretations</div>
-        <div class="sl-files">
-          <span>global-rules.md</span>
-          <span>color-system.md</span>
-          <span>reusable-elements.md</span>
-        </div>
-        <div class="sl-note">Typography stack · two-tone header rule · sparkle system · wave shapes · all accent hex values per SKU family.</div>
-      </div>
-      <div class="sl-arrow">
-        <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v10M4 8l4 6 4-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        raw source materials curated into L1
-      </div>
-
-      <div class="stack-layer sl-l0">
-        <div class="sl-tag">L0 · Evidence</div>
-        <div class="sl-title">Raw source materials from the product team</div>
-        <div class="sl-files">
-          <span>Color_Palette.svg</span>
-          <span>Logo.svg</span>
-          <span>Shapes.svg</span>
-          <span>Sparkles_1–11.png</span>
-          <span>Product photos</span>
-          <span>Brand fonts (.ttf)</span>
-        </div>
-        <div class="sl-note">Reference carousel images · before/after photography · doctor portrait.</div>
       </div>
     </div>
 
-    <div class="agent-flow">
-      <div class="agent-flow-head">
-        <h3>How an agent uses this</h3>
-        <span class="af-request">Request: build slot 09 for SKU "HealSoft Plus — pink"</span>
+  </div>
+</section>
+
+<!-- ────── SECTION 2.5: AGENT WALKTHROUGH ────── -->
+<section class="section" id="agent-walkthrough" style="--section-accent: var(--dfo-orange-600);" data-section-tag="· Walkthrough">
+  <div class="section-head">
+    <div class="section-num section-num--decimal">2.5</div>
+    <div>
+      <span class="eyebrow">How an agent uses this</span>
+      <h2>One request, four moves, three judges</h2>
+      <p class="lead">A worked example: how Claude and the image renderer turn a single SKU request into a carousel-ready image. Each step names its inputs, its actor, and what comes out the other side.</p>
+    </div>
+  </div>
+
+  <div class="af2-request">
+    <span class="af2-request-label">Example request</span>
+    <span class="af2-request-text">Build slot 09 for SKU "HealSoft Plus — pink"</span>
+  </div>
+
+  <div class="af2-chain">
+
+    <!-- Step 1 -->
+    <div class="af2-node">
+      <div class="af2-node-side">
+        <div class="af2-node-num">1</div>
+        <div class="af2-node-layer">Pulls from L1 + L2</div>
       </div>
-
-      <div class="agent-flow-steps">
-        <div class="af-step">
-          <div class="af-step-num" data-num="1">Compose</div>
-          <div class="af-step-title">Pull the bundle <span class="af-layer">L1 + L2</span></div>
-          <div class="af-step-body">Claude assembles the primitive bundle for this slot. Nothing is invented — every input is a locked file.</div>
-          <div class="af-bundle">
-            <div class="af-bundle-row"><span class="af-tag">L1</span><span class="af-bundle-text">brand truth <em>· global-rules · color-system · elements</em></span></div>
-            <div class="af-bundle-row"><span class="af-tag l2">L2</span><span class="af-bundle-text">slot template <em>· 09_before-after.md only</em></span></div>
-            <div class="af-bundle-row"><span class="af-tag brief">BR</span><span class="af-bundle-text">product brief <em>· SKU, palette, claims</em></span></div>
-            <div class="af-bundle-row"><span class="af-tag ref">REF</span><span class="af-bundle-text">reference image <em>· 09_*.jpg from L0</em></span></div>
+      <div class="af2-node-main">
+        <h3 class="af2-node-title">Compose the bundle</h3>
+        <p class="af2-node-desc">Claude gathers every piece of locked truth this slot needs — and only what it needs. Nothing is invented: each input is a file that already exists, owned by a specific layer.</p>
+        <div class="af2-io">
+          <div class="af2-io-cards">
+            <div class="af2-io-card"><span class="af2-io-tag l1">L1</span><div><strong>Brand truth</strong>global-rules · color-system · elements</div></div>
+            <div class="af2-io-card"><span class="af2-io-tag l2">L2</span><div><strong>Slot template</strong>only <code>09_before-after.md</code> — never the other 10</div></div>
+            <div class="af2-io-card"><span class="af2-io-tag br">BR</span><div><strong>Product brief</strong>this SKU's palette, claims, target use</div></div>
+            <div class="af2-io-card"><span class="af2-io-tag ref">REF</span><div><strong>Reference image</strong><code>09_*.jpg</code> from L0 — what "good" looks like</div></div>
           </div>
-        </div>
-
-        <div class="af-step">
-          <div class="af-step-num" data-num="2">Fill</div>
-          <div class="af-step-title">Resolve placeholders <span class="af-layer">L2.5</span></div>
-          <div class="af-step-body">Claude reads the bundle and writes the <code style="font-size:11px;padding:0 4px;">{{PLACEHOLDER}}</code> values: which variant, which accent hex, which claim copy, what goes in the header.</div>
-          <div class="af-bundle">
-            <div class="af-bundle-row"><span class="af-tag brief">→</span><span class="af-bundle-text">variant <em>· "before/after" picked from 3</em></span></div>
-            <div class="af-bundle-row"><span class="af-tag brief">→</span><span class="af-bundle-text">accent <em>· #EFCFC2 peach from SKU</em></span></div>
-            <div class="af-bundle-row"><span class="af-tag brief">→</span><span class="af-bundle-text">copy <em>· headline + disclaimer</em></span></div>
+          <div class="af2-io-arrow" aria-hidden="true">
+            <svg width="32" height="22" viewBox="0 0 32 22"><path d="M2 11h22M19 3l9 8-9 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
-
-        <div class="af-step">
-          <div class="af-step-num" data-num="3">Render</div>
-          <div class="af-step-title">Generate the image <span class="af-layer">L3</span></div>
-          <div class="af-step-body">Filled prompt + reference image are handed to the image renderer. The reference travels alongside the prompt — both are required inputs.</div>
-          <div class="af-bundle">
-            <div class="af-bundle-row"><span class="af-tag brief">→</span><span class="af-bundle-text">GPT Image 2 / Nano Banana</span></div>
-            <div class="af-bundle-row"><span class="af-tag ref">+</span><span class="af-bundle-text">reference image attached</span></div>
-            <div class="af-bundle-row"><span class="af-tag">←</span><span class="af-bundle-text">candidate carousel image</span></div>
-          </div>
-        </div>
-
-        <div class="af-step">
-          <div class="af-step-num" data-num="4">Judge</div>
-          <div class="af-step-title">Truth · Alignment · Brand</div>
-          <div class="af-step-body">Three judges observe. Human designer holds override authority — can reject what judges pass and force regenerate.</div>
-          <div class="af-judge">
-            <div class="af-judge-branch pass"><span class="af-pill">PASS</span><span>save to carousel as L4</span></div>
-            <div class="af-judge-branch fail"><span class="af-pill">FAIL</span><span>trace symptom → fix at the right layer ↓</span></div>
-          </div>
+          <div class="af2-io-out">Primitive<br>bundle</div>
         </div>
       </div>
+    </div>
 
-      <div class="af-trace">
-        <div class="af-trace-label">Failure routing — every symptom maps to exactly one layer</div>
-        <div class="af-trace-grid">
-          <div class="af-trace-row l1">
-            <div class="af-trace-symptom"><strong>Wrong claim</strong>fabricated stat, bad hex, missing trademark</div>
-            <div class="af-trace-target">L1</div>
+    <div class="af2-connector"><div class="af2-connector-line"></div><div class="af2-connector-text">bundle handed to Claude for assembly</div></div>
+
+    <!-- Step 2 -->
+    <div class="af2-node">
+      <div class="af2-node-side">
+        <div class="af2-node-num">2</div>
+        <div class="af2-node-layer">Runs at L2.5</div>
+      </div>
+      <div class="af2-node-main">
+        <h3 class="af2-node-title">Fill the placeholders</h3>
+        <p class="af2-node-desc">Claude reads the bundle and resolves every <code>{{PLACEHOLDER}}</code> in the template. This is the most skill-dependent step: pick the variant, lock the accent hex from the SKU, write the actual headline copy and disclaimer.</p>
+        <div class="af2-io">
+          <div class="af2-io-cards">
+            <div class="af2-io-card"><span class="af2-io-tag fill">A</span><div><strong>{{variant}}</strong>"before/after" — picked from 3 valid options</div></div>
+            <div class="af2-io-card"><span class="af2-io-tag fill">B</span><div><strong>{{accent}}</strong><code>#EFCFC2</code> peach — read from SKU palette</div></div>
+            <div class="af2-io-card"><span class="af2-io-tag fill">C</span><div><strong>{{copy}}</strong>headline + disclaimer text from brief</div></div>
           </div>
-          <div class="af-trace-row l2">
-            <div class="af-trace-symptom"><strong>Wrong layout</strong>misuses base rule, picks wrong variant</div>
-            <div class="af-trace-target">L2</div>
+          <div class="af2-io-arrow" aria-hidden="true">
+            <svg width="32" height="22" viewBox="0 0 32 22"><path d="M2 11h22M19 3l9 8-9 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="af-trace-row l25">
-            <div class="af-trace-symptom"><strong>Wrong placeholder</strong>copy doesn't match brief, claim drift</div>
-            <div class="af-trace-target">L2.5</div>
+          <div class="af2-io-out">Filled<br>prompt</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="af2-connector"><div class="af2-connector-line"></div><div class="af2-connector-text">filled prompt + reference image handed to renderer</div></div>
+
+    <!-- Step 3 -->
+    <div class="af2-node">
+      <div class="af2-node-side">
+        <div class="af2-node-num">3</div>
+        <div class="af2-node-layer">Runs at L3</div>
+      </div>
+      <div class="af2-node-main">
+        <h3 class="af2-node-title">Render the image</h3>
+        <p class="af2-node-desc">The filled prompt is sent to an image generator. The reference image rides alongside the prompt — both are required inputs, never one without the other.</p>
+        <div class="af2-io">
+          <div class="af2-io-cards">
+            <div class="af2-io-card"><span class="af2-io-tag fill">▸</span><div><strong>Renderer</strong>GPT Image 2 / Nano Banana / human designer</div></div>
+            <div class="af2-io-card"><span class="af2-io-tag ref">+</span><div><strong>Reference</strong>attached as visual anchor for composition</div></div>
           </div>
-          <div class="af-trace-row l3">
-            <div class="af-trace-symptom"><strong>Wrong render</strong>artifacts, misshapen product, image drift</div>
-            <div class="af-trace-target">L3</div>
+          <div class="af2-io-arrow" aria-hidden="true">
+            <svg width="32" height="22" viewBox="0 0 32 22"><path d="M2 11h22M19 3l9 8-9 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="af2-io-out">Candidate<br>image</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="af2-connector"><div class="af2-connector-line"></div><div class="af2-connector-text">candidate sent to the judges</div></div>
+
+    <!-- Step 4 -->
+    <div class="af2-node af2-node--judge">
+      <div class="af2-node-side">
+        <div class="af2-node-num">4</div>
+        <div class="af2-node-layer">The Judges</div>
+      </div>
+      <div class="af2-node-main">
+        <h3 class="af2-node-title">Truth · Alignment · Brand</h3>
+        <p class="af2-node-desc">Three judges evaluate the candidate against the locked rules. A human designer holds override authority — they can reject what the judges pass, or force a regenerate before a candidate reaches the carousel.</p>
+        <div class="af2-branch">
+          <div class="af2-branch-row pass">
+            <span class="af2-pill">PASS</span>
+            <span class="af2-branch-text">Saved to carousel as <strong>L4</strong>. Done.</span>
+          </div>
+          <div class="af2-branch-row fail">
+            <span class="af2-pill">FAIL</span>
+            <span class="af2-branch-text">Trace the symptom to the layer that owns it, fix it there, then regenerate. See the routing table below.</span>
           </div>
         </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Failure routing -->
+  <div class="af2-trace">
+    <div class="af2-trace-head">
+      <span class="af2-trace-icon" aria-hidden="true">✗</span>
+      <div>
+        <h3 class="af2-trace-title">Failure routing</h3>
+        <p>Every symptom maps to exactly one layer. Fix it at its source — never patch the render.</p>
+      </div>
+    </div>
+    <div class="af2-trace-grid">
+      <div class="af2-trace-row l1">
+        <div class="af2-trace-symptom"><strong>Wrong claim</strong>fabricated stat · bad hex · missing trademark</div>
+        <div class="af2-trace-target">L1</div>
+      </div>
+      <div class="af2-trace-row l2">
+        <div class="af2-trace-symptom"><strong>Wrong layout</strong>misuses base rule · picks wrong variant</div>
+        <div class="af2-trace-target">L2</div>
+      </div>
+      <div class="af2-trace-row l25">
+        <div class="af2-trace-symptom"><strong>Wrong placeholder</strong>copy doesn't match brief · claim drift</div>
+        <div class="af2-trace-target">L2.5</div>
+      </div>
+      <div class="af2-trace-row l3">
+        <div class="af2-trace-symptom"><strong>Wrong render</strong>artifacts · misshapen product · image drift</div>
+        <div class="af2-trace-target">L3</div>
       </div>
     </div>
   </div>
